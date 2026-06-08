@@ -222,8 +222,12 @@
   .markers .s{color:var(--accent);padding:0 12px}
 
   /* vertical session frames */
-  .vstrip{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;align-items:flex-start;margin-top:clamp(28px,3.4vw,44px)}
-  .vframe{flex:none;width:clamp(220px,25vw,300px);aspect-ratio:9/16;overflow:hidden;background:var(--paper2);border:3px solid var(--rule)}
+  .vstrip{overflow:hidden;width:100vw;position:relative;left:50%;margin-left:-50vw;margin-top:clamp(28px,3.4vw,44px);
+    border-top:3px solid var(--rule);border-bottom:3px solid var(--rule);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+  .vtrack{display:flex;width:max-content;animation:marq 54s linear infinite}
+  .vstrip:hover .vtrack{animation-play-state:paused}
+  .vframe{flex:none;width:clamp(200px,21vw,280px);aspect-ratio:9/16;overflow:hidden;background:var(--paper2);border-right:3px solid var(--rule)}
   .vframe img,.vframe video{width:100%;height:100%;object-fit:cover}
   .vframe .vtag{position:absolute;left:10px;bottom:9px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:3px 7px}
   .vframe .vsnd{position:absolute;right:9px;top:9px;z-index:3;cursor:pointer;line-height:1;
@@ -318,8 +322,8 @@
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
   .reveal.in{opacity:1;transform:none}
   html[data-motion="off"] .reveal{opacity:1!important;transform:none!important;transition:none!important}
-  html[data-motion="off"] .track,html[data-motion="off"] .tk,html[data-motion="off"] .disctrack{animation:none!important}
-  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}.track,.tk,.disctrack{animation:none!important}}
+  html[data-motion="off"] .track,html[data-motion="off"] .tk,html[data-motion="off"] .disctrack,html[data-motion="off"] .vtrack{animation:none!important}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}.track,.tk,.disctrack,.vtrack{animation:none!important}}
 </style>
 </head>
 <body>
@@ -528,12 +532,19 @@
   <div class="wrap reveal">
     <div class="mvt"><span class="no">07</span><span class="nm"><b>Из сессий</b></span><span class="tail">фрагменты</span></div>
     <div class="head" style="grid-template-columns:1fr"><h2 style="font-size:clamp(30px,4vw,52px)">Фрагменты <em>из сессий</em></h2></div>
-    <div class="vstrip">
+  </div>
+  <div class="vstrip reveal">
+    <div class="vtrack">
       <div class="vframe"><video class="vclip" src="assets/IMG_3526.MP4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">сессия · 01</span></div>
       <div class="vframe"><video class="vclip" src="assets/IMG_3528.MP4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">сессия · 02</span></div>
       <div class="vframe"><video class="vclip" src="assets/IMG_4160%20copy.mp4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">сессия · 03</span></div>
       <div class="vframe"><video class="vclip" src="assets/IMG_2884%20copy.mp4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">у воды</span></div>
       <div class="vframe"><video class="vclip" src="assets/IMG_2921%20copy.mp4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">в кустах</span></div>
+      <div class="vframe" aria-hidden="true"><video class="vclip" src="assets/IMG_3526.MP4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">сессия · 01</span></div>
+      <div class="vframe" aria-hidden="true"><video class="vclip" src="assets/IMG_3528.MP4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">сессия · 02</span></div>
+      <div class="vframe" aria-hidden="true"><video class="vclip" src="assets/IMG_4160%20copy.mp4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">сессия · 03</span></div>
+      <div class="vframe" aria-hidden="true"><video class="vclip" src="assets/IMG_2884%20copy.mp4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">у воды</span></div>
+      <div class="vframe" aria-hidden="true"><video class="vclip" src="assets/IMG_2921%20copy.mp4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">в кустах</span></div>
     </div>
   </div>
 </section>
@@ -670,11 +681,15 @@
   // reveal
   const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-  // session clips — play (muted) only while in view; one audible at a time
+  // session clips — play (muted) while the gallery is on screen; one audible at a time
   const clips=document.querySelectorAll('.vframe .vclip');
-  const vio=new IntersectionObserver((es)=>{es.forEach(e=>{const v=e.target;
-    if(e.isIntersecting){v.play().catch(()=>{})}else{v.pause()}})},{threshold:.25});
-  clips.forEach(v=>vio.observe(v));
+  const sessions=document.getElementById('sessions');
+  if(sessions){
+    const vio=new IntersectionObserver((es)=>{es.forEach(e=>{
+      clips.forEach(v=>{e.isIntersecting?v.play().catch(()=>{}):v.pause()});
+    })},{threshold:.02});
+    vio.observe(sessions);
+  }
   document.querySelectorAll('.vframe .vsnd').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const v=btn.parentElement.querySelector('video');
