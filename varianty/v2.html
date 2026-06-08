@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-accent="red" data-duo="off" data-density="roomy" data-motion="on">
+<html lang="ru" data-accent="red" data-duo="off" data-density="roomy" data-motion="on" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +23,26 @@
   html[data-accent="black"]{--accent:var(--black)}
   html[data-accent="green"]{--accent:var(--green)}
   html[data-density="cozy"]{--sp:.72}
+
+  /* DARK THEME — warm near-black ground, off-white ink; accent red stays */
+  html[data-theme="dark"]{
+    --paper:#17130C; --paper2:#211B12; --paper3:#2B2416;
+    --ink:#F1EBDD; --muted:#ADA288; --faint:#776C54;
+    --line:rgba(241,235,221,.15); --line2:rgba(241,235,221,.34); --rule:#EBE4D4;
+    --on-accent:#F7F1E4;
+  }
+  /* keep the inverted bands dark instead of flipping to cream */
+  html[data-theme="dark"] .ticker{background:#0E0B05}
+  html[data-theme="dark"] .ticker span{color:var(--ink)}
+  html[data-theme="dark"] .cloud{background:#0E0B05}
+  html[data-theme="dark"] .cloud .mvt{border-top-color:var(--line2)}
+  html[data-theme="dark"] .cloud .mvt .nm,
+  html[data-theme="dark"] .cloud .mvt .nm b{color:var(--ink)}
+  html[data-theme="dark"] .cloud q{color:var(--ink)}
+  html[data-theme="dark"] .cloud q.s{color:var(--muted);opacity:.8}
+  html[data-theme="dark"] .cloud q.l{color:var(--accent)}
+  /* grain reads as light on dark */
+  html[data-theme="dark"] body::after{mix-blend-mode:screen;opacity:.05}
 
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}

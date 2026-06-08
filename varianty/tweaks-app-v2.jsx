@@ -5,7 +5,8 @@ const RA_DEFAULTS = /*EDITMODE-BEGIN*/{
   "accent": "red",
   "duo": false,
   "density": "roomy",
-  "motion": true
+  "motion": true,
+  "dark": true
 }/*EDITMODE-END*/;
 
 function applyTweaks(t){
@@ -14,6 +15,7 @@ function applyTweaks(t){
   r.setAttribute('data-duo', t.duo ? 'on' : 'off');
   r.setAttribute('data-density', t.density);
   r.setAttribute('data-motion', t.motion ? 'on' : 'off');
+  r.setAttribute('data-theme', t.dark ? 'dark' : 'light');
 }
 
 function App(){
@@ -22,6 +24,8 @@ function App(){
   return (
     <TweaksPanel title="Tweaks">
       <TweakSection label="Цвет" />
+      <TweakToggle label="Тёмная тема" value={t.dark}
+        onChange={(v)=>setTweak('dark', v)} />
       <TweakColor label="Акцент" value={t.accent==='red'?'#E0401C':t.accent==='blue'?'#243FB5':t.accent==='green'?'#2F7A4A':'#15110B'}
         options={['#E0401C','#243FB5','#2F7A4A','#15110B']}
         onChange={(hex)=>{
