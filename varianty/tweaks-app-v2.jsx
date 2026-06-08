@@ -3,7 +3,7 @@
 
 const RA_DEFAULTS = /*EDITMODE-BEGIN*/{
   "accent": "red",
-  "duo": true,
+  "duo": false,
   "density": "roomy",
   "motion": true
 }/*EDITMODE-END*/;
