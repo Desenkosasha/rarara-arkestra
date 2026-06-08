@@ -226,6 +226,12 @@
   .vframe{flex:none;width:clamp(220px,25vw,300px);aspect-ratio:9/16;overflow:hidden;background:var(--paper2);border:3px solid var(--rule)}
   .vframe img,.vframe video{width:100%;height:100%;object-fit:cover}
   .vframe .vtag{position:absolute;left:10px;bottom:9px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:3px 7px}
+  .vframe .vsnd{position:absolute;right:9px;top:9px;z-index:3;cursor:pointer;line-height:1;
+    font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink);background:color-mix(in srgb,var(--paper) 80%,transparent);
+    border:2px solid var(--rule);padding:4px 8px;transition:.15s}
+  .vframe .vsnd::before{content:"♪ "}
+  .vframe .vsnd:hover,.vframe .vsnd.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
 
   /* outcomes */
   .stk{margin-top:clamp(22px,3vw,36px)}
@@ -523,9 +529,11 @@
     <div class="mvt"><span class="no">07</span><span class="nm"><b>Из сессий</b></span><span class="tail">фрагменты</span></div>
     <div class="head" style="grid-template-columns:1fr"><h2 style="font-size:clamp(30px,4vw,52px)">Фрагменты <em>из сессий</em></h2></div>
     <div class="vstrip">
-      <div class="vframe"><video src="assets/IMG_3526.MP4" autoplay muted loop playsinline preload="metadata"></video><span class="vtag">сессия · 01</span></div>
-      <div class="vframe"><video src="assets/IMG_3528.MP4" autoplay muted loop playsinline preload="metadata"></video><span class="vtag">сессия · 02</span></div>
-      <div class="vframe"><video src="assets/IMG_4160%20copy.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="vtag">сессия · 03</span></div>
+      <div class="vframe"><video class="vclip" src="assets/IMG_3526.MP4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">сессия · 01</span></div>
+      <div class="vframe"><video class="vclip" src="assets/IMG_3528.MP4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">сессия · 02</span></div>
+      <div class="vframe"><video class="vclip" src="assets/IMG_4160%20copy.mp4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">сессия · 03</span></div>
+      <div class="vframe"><video class="vclip" src="assets/IMG_2884%20copy.mp4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">у воды</span></div>
+      <div class="vframe"><video class="vclip" src="assets/IMG_2921%20copy.mp4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">в кустах</span></div>
     </div>
   </div>
 </section>
@@ -662,6 +670,20 @@
   // reveal
   const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // session clips — play (muted) only while in view; one audible at a time
+  const clips=document.querySelectorAll('.vframe .vclip');
+  const vio=new IntersectionObserver((es)=>{es.forEach(e=>{const v=e.target;
+    if(e.isIntersecting){v.play().catch(()=>{})}else{v.pause()}})},{threshold:.25});
+  clips.forEach(v=>vio.observe(v));
+  document.querySelectorAll('.vframe .vsnd').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const v=btn.parentElement.querySelector('video');
+      const turnOn=v.muted;
+      clips.forEach(o=>{o.muted=true});
+      document.querySelectorAll('.vframe .vsnd').forEach(b=>b.classList.remove('on'));
+      if(turnOn){v.muted=false;v.play().catch(()=>{});btn.classList.add('on')}
+    });
+  });
   // youtube facade — load player only on click (avoids autoplay/player errors on load)
   document.querySelectorAll('.vid .vplay').forEach(btn=>{
     btn.addEventListener('click',()=>{
