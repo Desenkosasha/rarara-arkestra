@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ru" data-accent="red" data-duo="on" data-density="roomy" data-motion="on">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RARARA ARKESTRA — постер / ризо</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Unbounded:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2ECDE; --paper2:#EAE1CF; --paper3:#E2D7C0;
+    --ink:#15110B; --muted:#766B57; --faint:#A99C82;
+    --line:rgba(21,17,11,.16); --line2:rgba(21,17,11,.34); --rule:#15110B;
+    --red:#E0401C; --blue:#243FB5; --green:#2F7A4A; --black:#15110B;
+    --accent:var(--red); --on-accent:#F7F1E4;
+    --disp:"Unbounded",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+    --body:"Manrope",system-ui,sans-serif;
+    --sp:1; --maxw:1300px;
+  }
+  html[data-accent="blue"]{--accent:var(--blue)}
+  html[data-accent="black"]{--accent:var(--black)}
+  html[data-accent="green"]{--accent:var(--green)}
+  html[data-density="cozy"]{--sp:.72}
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:400;
+    -webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden;position:relative}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:900;opacity:.06;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  a{color:inherit;text-decoration:none}
+  em{font-style:normal;color:var(--accent)}
+  img,video{display:block;max-width:100%}
+  ::selection{background:var(--accent);color:var(--on-accent)}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,72px)}
+  .mono{font-family:var(--mono);font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-size:11.5px}
+  .accent{color:var(--accent)}
+
+  /* duotone */
+  .frame,.vframe,.fcard .fim,.split .im,.band{position:relative}
+  html[data-duo="on"] .frame img,
+  html[data-duo="on"] .band img,
+  html[data-duo="on"] .split .im img,
+  html[data-duo="on"] .vframe img,
+  html[data-duo="on"] .fcard .fim img,
+  html[data-duo="on"] .caseimg{filter:grayscale(1) contrast(1.08) brightness(1.04)}
+  html[data-duo="on"] .frame::after,
+  html[data-duo="on"] .band::after,
+  html[data-duo="on"] .split .im::after,
+  html[data-duo="on"] .vframe::after,
+  html[data-duo="on"] .fcard .fim::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:var(--accent);mix-blend-mode:multiply;opacity:.9}
+
+  /* movement header — big poster numerals */
+  .mvt{display:flex;align-items:baseline;gap:16px;padding:16px 0 0;border-top:3px solid var(--rule);
+    font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;font-size:12px}
+  .mvt .no{font-family:var(--disp);font-weight:800;font-size:clamp(20px,2.4vw,30px);color:var(--accent);letter-spacing:0;line-height:1}
+  .mvt .nm{color:var(--ink);font-weight:600;align-self:center}
+  .mvt .nm b{font-weight:600}
+  .mvt .tail{margin-left:auto;color:var(--faint);font-size:11px;letter-spacing:.14em;align-self:center}
+
+  section{padding:calc(60px*var(--sp)) 0 calc(82px*var(--sp))}
+  h1,h2,h3{font-family:var(--disp);font-weight:600;letter-spacing:-.02em;line-height:1.02;text-wrap:balance}
+  .body-p{font-size:clamp(16px,1.55vw,19px);color:var(--muted);line-height:1.62;max-width:54ch}
+
+  /* NAV */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:200;background:color-mix(in srgb,var(--paper) 84%,transparent);
+    backdrop-filter:blur(10px);border-bottom:2px solid transparent;transition:border-color .3s}
+  .nav.scrolled{border-color:var(--rule)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px;max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,72px)}
+  .wm{font-family:var(--disp);font-weight:800;letter-spacing:-.01em;font-size:16px;display:flex;align-items:center;gap:9px}
+  .wm .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex:none}
+  .nav .right{display:flex;align-items:center;gap:22px}
+  .nav .navlink{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:none}
+  @media(min-width:900px){.nav .navlink{display:inline}.nav .navlink:hover{color:var(--accent)}}
+  .pill{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+    border:2px solid var(--rule);border-radius:0;padding:9px 18px;transition:.2s}
+  .pill:hover{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+
+  /* HERO */
+  .hero{padding-top:clamp(118px,16vh,176px);padding-bottom:0}
+  .hero .eyebrow{margin-bottom:0}
+  .hero h1{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(34px,6.6vw,92px);
+    line-height:.98;letter-spacing:-.035em;max-width:16ch;margin-top:clamp(20px,3vw,36px)}
+  .hero .sub{display:grid;grid-template-columns:1fr;gap:24px;margin-top:clamp(30px,4vw,52px);align-items:end}
+  @media(min-width:820px){.hero .sub{grid-template-columns:1.1fr .9fr;gap:48px}}
+  .hero .sub p{font-size:clamp(16px,1.7vw,20px);color:var(--muted);max-width:46ch;line-height:1.55}
+  .hero .cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--on-accent);
+    border-radius:0;padding:15px 26px;transition:.2s;border:2px solid var(--accent)}
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--rule)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+  .btn.ghost:hover{background:var(--ink);color:var(--paper);box-shadow:5px 5px 0 var(--accent)}
+  .hero-meta{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);line-height:2}
+
+  .band{width:100vw;left:50%;margin-left:-50vw;overflow:hidden;background:var(--paper2)}
+  .band.hero-band{margin-top:clamp(44px,6vw,80px);height:clamp(320px,64vh,640px);border-top:3px solid var(--rule);border-bottom:3px solid var(--rule)}
+  .band img,.band video{width:100%;height:100%;object-fit:cover}
+  .band .cap{position:absolute;left:clamp(20px,5vw,72px);bottom:18px;z-index:3;font-family:var(--mono);font-size:11px;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:5px 10px}
+
+  /* film strip */
+  .strip{overflow:hidden;width:100vw;left:50%;margin-left:-50vw;position:relative;padding:0;border-top:3px solid var(--rule);border-bottom:3px solid var(--rule);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .track{display:flex;gap:0;width:max-content;animation:marq 56s linear infinite}
+  .track.rev{animation-direction:reverse;animation-duration:64s}
+  .strip:hover .track{animation-play-state:paused}
+  @keyframes marq{to{transform:translateX(-50%)}}
+  .frame{width:clamp(230px,26vw,360px);height:clamp(300px,30vw,420px);flex:none;overflow:hidden;background:var(--paper2);border-right:3px solid var(--rule)}
+  .frame img{width:100%;height:100%;object-fit:cover}
+  .frame .ix{position:absolute;left:9px;top:8px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--on-accent);background:var(--accent);padding:2px 6px}
+
+  /* ticker */
+  .ticker{border-top:0;border-bottom:3px solid var(--rule);overflow:hidden;padding:14px 0;background:var(--ink)}
+  .ticker .tk{display:flex;width:max-content;animation:marq 36s linear infinite}
+  .ticker span{font-family:var(--disp);font-weight:600;text-transform:uppercase;font-size:clamp(14px,1.6vw,20px);padding:0 4px;white-space:nowrap;color:var(--paper)}
+  .ticker .dot{color:var(--accent);padding:0 24px}
+
+  /* 3 features */
+  .feat3{display:grid;grid-template-columns:1fr;margin-top:clamp(32px,4vw,50px);border-top:2px solid var(--rule)}
+  @media(min-width:760px){.feat3{grid-template-columns:repeat(3,1fr)}}
+  .feat{padding:clamp(24px,2.4vw,32px) 0;border-bottom:2px solid var(--rule)}
+  @media(min-width:760px){.feat{border-bottom:none;border-left:2px solid var(--rule);padding:clamp(26px,2.4vw,34px) clamp(22px,2.2vw,30px) 0}
+    .feat:first-child{border-left:none;padding-left:0}}
+  .feat .fno{font-family:var(--disp);font-weight:800;font-size:clamp(28px,3vw,44px);color:var(--accent);margin-bottom:14px;line-height:1}
+  .feat .ft{font-family:var(--disp);font-weight:600;text-transform:uppercase;font-size:clamp(17px,1.8vw,22px);line-height:1.06;letter-spacing:-.01em}
+  .feat .fd{font-size:15.5px;color:var(--muted);line-height:1.58;margin-top:14px}
+
+  .vid{position:relative;width:100%;padding-top:56.25%;overflow:hidden;background:#000;margin-top:clamp(40px,5vw,64px);border:3px solid var(--rule)}
+  .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .vid .vplay{position:absolute;inset:0;width:100%;height:100%;border:0;cursor:pointer;padding:0;background:#000;display:block}
+  .vid .vplay img{width:100%;height:100%;object-fit:cover;opacity:.82;transition:.3s}
+  html[data-duo="on"] .vid .vplay img{filter:grayscale(1) contrast(1.08) brightness(1.04)}
+  html[data-duo="on"] .vid .vplay::after{content:"";position:absolute;inset:0;background:var(--accent);mix-blend-mode:multiply;opacity:.9;pointer-events:none}
+  .vid .vplay:hover img{opacity:.96}
+  .vid .pbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:0;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;justify-content:center;font-size:20px;padding-left:4px;transition:.2s;z-index:3}
+  .vid .vplay:hover .pbtn{transform:translate(-50%,-50%) scale(1.08)}
+  .vid .vlabel{position:absolute;left:14px;bottom:13px;z-index:3;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:4px 9px}
+
+  .head{display:grid;grid-template-columns:1fr;gap:14px;align-items:end;margin-top:clamp(24px,3vw,38px)}
+  @media(min-width:780px){.head{grid-template-columns:1.5fr 1fr;gap:40px}}
+  .head h2{font-size:clamp(30px,5vw,68px);text-transform:uppercase}
+  .head .hp{font-size:clamp(15px,1.5vw,18px);color:var(--muted);line-height:1.55;max-width:42ch}
+
+  /* HOST */
+  .host h2{font-size:clamp(40px,8.4vw,110px);text-transform:uppercase;line-height:.9}
+  .hostgrid{display:grid;grid-template-columns:1fr;gap:clamp(28px,4vw,56px);margin-top:clamp(34px,4vw,52px);align-items:start}
+  @media(min-width:880px){.hostgrid{grid-template-columns:1.25fr 1fr}}
+  .hostbio .intro{font-family:var(--disp);font-weight:600;font-size:clamp(19px,2.1vw,26px);line-height:1.18;color:var(--ink);margin-bottom:20px;max-width:24ch}
+  .hostbio p{font-size:16.5px;color:var(--muted);line-height:1.66;margin-bottom:14px;max-width:50ch}
+  .hostbio p b{color:var(--ink);font-weight:600}
+  .hostq{border:3px solid var(--rule);padding:clamp(24px,3vw,36px);background:var(--accent)}
+  .hostq .k{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-accent);opacity:.8;margin-bottom:18px}
+  .hostq q{font-family:var(--disp);font-weight:600;font-size:clamp(18px,2vw,25px);line-height:1.22;color:var(--on-accent);quotes:"«" "»"}
+  .scenes{margin-top:clamp(28px,3.4vw,42px);border-top:2px solid var(--rule);padding-top:20px;font-size:14.5px;color:var(--muted);line-height:1.9}
+  .scenes .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-right:14px}
+  .scenes .sep{color:var(--accent);padding:0 6px}
+  .music{margin-top:clamp(30px,4vw,48px)}
+  .music .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+  .discstrip{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+  .disctrack{display:flex;gap:14px;width:max-content;animation:marq 60s linear infinite}
+  .discstrip:hover .disctrack{animation-play-state:paused}
+  .acard{flex:none;width:clamp(260px,28vw,330px);border:2px solid var(--rule);background:var(--paper);padding:clamp(22px,2.2vw,28px);display:flex;flex-direction:column;gap:12px;transition:.18s}
+  .acard:hover{background:var(--ink);color:var(--paper);transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--accent)}
+  .acard:hover .ad{color:var(--paper2)}
+  .acard .ah{font-family:var(--disp);font-weight:600;font-size:clamp(18px,1.9vw,22px);line-height:1.05}
+  .acard .ad{font-size:14px;color:var(--muted);line-height:1.5;flex:1}
+  .acard .al{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+
+  /* audience */
+  .aud4{display:grid;grid-template-columns:1fr;margin-top:clamp(24px,3vw,38px);border-top:2px solid var(--rule)}
+  .aud4 .a{padding:24px 0;border-bottom:2px solid var(--rule)}
+  @media(min-width:760px){.aud4{grid-template-columns:repeat(4,1fr)}.aud4 .a{border-bottom:none;border-left:2px solid var(--rule);padding:26px 22px 0}.aud4 .a:first-child{border-left:none;padding-left:0}}
+  .aud4 .ano{font-family:var(--disp);font-weight:800;font-size:clamp(24px,2.4vw,34px);color:var(--accent);margin-bottom:12px;line-height:1}
+  .aud4 .ak{font-family:var(--disp);font-weight:600;text-transform:uppercase;font-size:clamp(16px,1.6vw,20px);line-height:1.04}
+  .aud4 .av{font-size:14px;color:var(--muted);line-height:1.55;margin-top:12px}
+
+  /* why */
+  .reasons{margin-top:clamp(24px,3vw,38px)}
+  .reason{display:grid;grid-template-columns:1fr;gap:8px;border-top:2px solid var(--rule);padding:clamp(26px,3.4vw,42px) 0}
+  @media(min-width:820px){.reason{grid-template-columns:80px 1.1fr 1fr;gap:36px;align-items:baseline}}
+  .reason:last-child{border-bottom:2px solid var(--rule)}
+  .reason .rn{font-family:var(--disp);font-weight:800;font-size:clamp(28px,3vw,46px);color:var(--accent);line-height:1}
+  .reason .rt{font-family:var(--disp);font-weight:600;font-size:clamp(20px,2.4vw,30px);line-height:1.08;letter-spacing:-.01em}
+  .reason .rd{font-size:15.5px;color:var(--muted);line-height:1.6}
+
+  /* split */
+  .split{display:grid;grid-template-columns:1fr;gap:clamp(28px,4vw,64px);align-items:center;margin-top:clamp(24px,3vw,40px)}
+  @media(min-width:880px){.split{grid-template-columns:1fr 1fr}.split.rev .im{order:2}}
+  .split .im{overflow:hidden;border:3px solid var(--rule)}
+  .split .im img{width:100%;height:clamp(340px,48vw,560px);object-fit:cover}
+  .split .im .tag{position:absolute;left:12px;bottom:11px;z-index:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:4px 9px}
+  .split h2{font-size:clamp(26px,3.6vw,48px);max-width:15ch;text-transform:uppercase;line-height:.98}
+  .split .body-p{margin-top:22px}
+  .impq{font-family:var(--disp);font-weight:600;font-size:clamp(17px,1.9vw,24px);line-height:1.2;margin-top:28px;color:var(--ink);border-left:4px solid var(--accent);padding-left:20px}
+  .impq span{display:block;font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-top:14px}
+  .markers{margin-top:28px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);display:flex;flex-wrap:wrap;gap:6px 0;font-weight:600}
+  .markers .s{color:var(--accent);padding:0 12px}
+
+  /* vertical session frames */
+  .vstrip{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;align-items:flex-start;margin-top:clamp(28px,3.4vw,44px)}
+  .vframe{flex:none;width:clamp(220px,25vw,300px);aspect-ratio:9/16;overflow:hidden;background:var(--paper2);border:3px solid var(--rule)}
+  .vframe img,.vframe video{width:100%;height:100%;object-fit:cover}
+  .vframe .vtag{position:absolute;left:10px;bottom:9px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:3px 7px}
+
+  /* outcomes */
+  .stk{margin-top:clamp(22px,3vw,36px)}
+  .stk .row{display:grid;grid-template-columns:1fr;gap:8px;border-top:2px solid var(--rule);padding:clamp(22px,2.8vw,34px) 0}
+  @media(min-width:760px){.stk .row{grid-template-columns:80px 1fr;gap:34px;align-items:baseline}}
+  .stk .row:last-child{border-bottom:2px solid var(--rule)}
+  .stk .rn{font-family:var(--disp);font-weight:800;font-size:clamp(26px,2.8vw,42px);color:var(--accent);line-height:1}
+  .stk .rt{font-family:var(--disp);font-weight:600;font-size:clamp(19px,2.2vw,29px);line-height:1.12}
+
+  /* quotes */
+  .cloud{background:var(--ink);padding:clamp(60px,9vh,120px) 0}
+  .cloud .mvt{border-top-color:var(--paper)}
+  .cloud .mvt .nm,.cloud .mvt .nm b{color:var(--paper)}
+  .cloud .qs{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:clamp(18px,2.6vw,40px);max-width:1080px;margin:clamp(32px,4vw,50px) auto 0}
+  .cloud q{display:block;font-family:var(--disp);font-weight:600;line-height:1.08;color:var(--paper);quotes:"«" "»"}
+  .cloud q.s{font-size:clamp(15px,1.5vw,18px);max-width:20ch;color:var(--paper2);opacity:.78}
+  .cloud q.m{font-size:clamp(18px,2vw,26px);max-width:17ch}
+  .cloud q.l{font-size:clamp(22px,2.8vw,36px);max-width:14ch;color:var(--accent)}
+
+  /* turnkey */
+  .steps{display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;margin-top:clamp(28px,3.4vw,44px)}
+  .steps .st{font-family:var(--disp);font-weight:600;text-transform:uppercase;font-size:clamp(17px,2.2vw,30px);letter-spacing:-.01em;line-height:1.04}
+  .steps .sep{color:var(--accent);margin:0 clamp(12px,1.6vw,22px);font-family:var(--disp);font-weight:800}
+  .tklines{margin-top:clamp(34px,4vw,52px);max-width:780px}
+  .tklines p{font-size:clamp(15.5px,1.6vw,18px);color:var(--muted);line-height:1.58;padding:18px 0;border-top:2px solid var(--rule);display:grid;grid-template-columns:1fr;gap:6px}
+  @media(min-width:680px){.tklines p{grid-template-columns:44px 1fr;gap:26px;align-items:baseline}}
+  .tklines p:last-child{border-bottom:2px solid var(--rule)}
+  .tklines .pn{font-family:var(--disp);font-weight:800;font-size:clamp(20px,2vw,28px);color:var(--accent);line-height:1}
+  .tklines b{color:var(--ink);font-weight:600}
+
+  /* format cards */
+  .fcards{display:grid;grid-template-columns:1fr;gap:16px;margin-top:clamp(24px,3vw,38px)}
+  @media(min-width:780px){.fcards{grid-template-columns:repeat(3,1fr)}}
+  .fcard{border:3px solid var(--rule);overflow:hidden;background:var(--paper);display:flex;flex-direction:column;transition:.18s}
+  .fcard:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--accent)}
+  .fcard .fim{overflow:hidden;height:clamp(190px,18vw,230px);border-bottom:3px solid var(--rule)}
+  .fcard .fim img{width:100%;height:100%;object-fit:cover}
+  .fcard .fc-b{padding:clamp(22px,2.3vw,30px);display:flex;flex-direction:column;gap:10px;flex:1}
+  .fcard .fc-l{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--accent)}
+  .fcard .fc-h{font-family:var(--disp);font-weight:600;text-transform:uppercase;font-size:clamp(22px,2.4vw,30px);line-height:.98;display:flex;align-items:center;gap:12px}
+  .fcard .fc-h .num{font-weight:800;color:var(--accent)}
+  .fcard .fc-d{font-size:14.5px;color:var(--muted);line-height:1.55}
+
+  /* case */
+  .casegrid{display:grid;grid-template-columns:1fr;overflow:hidden;border:3px solid var(--rule);background:var(--paper);margin-top:clamp(24px,3vw,38px)}
+  @media(min-width:840px){.casegrid{grid-template-columns:.82fr 1.18fr}}
+  .casegrid .caseimg{width:100%;height:100%;min-height:clamp(320px,42vw,560px);object-fit:cover;border-right:3px solid var(--rule)}
+  .casegrid .casebody{padding:clamp(30px,4vw,58px)}
+  .casegrid .ce{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+  .casegrid .rl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .casegrid .ct{font-size:clamp(15.5px,1.6vw,18px);color:var(--muted);margin-top:16px;line-height:1.62}
+  .casegrid .punch{font-family:var(--disp);font-weight:600;font-size:clamp(18px,2.2vw,28px);line-height:1.16;margin-top:24px;color:var(--ink);quotes:"«" "»"}
+  .casegrid .src{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:20px}
+
+  /* faq */
+  .faq{margin-top:clamp(22px,3vw,36px)}
+  details{border-top:2px solid var(--rule)}
+  details:last-child{border-bottom:2px solid var(--rule)}
+  summary{list-style:none;cursor:pointer;padding:clamp(20px,2.6vw,28px) 0;display:flex;justify-content:space-between;align-items:center;gap:24px;font-family:var(--disp);font-weight:600;font-size:clamp(17px,1.9vw,24px);line-height:1.12}
+  summary::-webkit-details-marker{display:none}
+  summary .ic{flex:none;width:24px;height:24px;position:relative}
+  summary .ic::before,summary .ic::after{content:"";position:absolute;background:var(--accent);left:50%;top:50%}
+  summary .ic::before{width:16px;height:2.5px;transform:translate(-50%,-50%)}
+  summary .ic::after{width:2.5px;height:16px;transform:translate(-50%,-50%);transition:transform .3s}
+  details[open] summary .ic::after{transform:translate(-50%,-50%) scaleY(0)}
+  details .ans{padding:0 0 clamp(22px,2.6vw,28px);color:var(--muted);font-size:15.5px;line-height:1.64;max-width:62ch}
+
+  /* closing */
+  .closing{text-align:center;padding-bottom:clamp(68px,9vh,116px)}
+  .closing h2{font-size:clamp(34px,7vw,92px);line-height:.94;max-width:16ch;margin:0 auto;text-transform:uppercase}
+  .closing .body-p{max-width:46ch;margin:clamp(22px,3vw,32px) auto 0;text-align:center}
+  .closing .cta-row{justify-content:center;margin-top:clamp(28px,3.4vw,40px);display:flex;flex-wrap:wrap;gap:14px}
+  .closing .fine{margin-top:clamp(26px,3vw,36px);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+  footer{border-top:3px solid var(--rule);padding:clamp(34px,4vw,52px) 0 clamp(44px,5vw,64px)}
+  .fin{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:2}
+  .fin .accent{font-weight:700}
+  .fin b{color:var(--ink);font-weight:600}
+
+  /* version switcher */
+  .vswitch{position:fixed;left:16px;bottom:16px;z-index:300;display:flex;align-items:center;gap:2px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+    background:var(--paper);border:2px solid var(--rule);border-radius:0;padding:4px}
+  .vswitch a{padding:6px 12px;color:var(--muted);transition:.15s}
+  .vswitch a.on{background:var(--accent);color:var(--on-accent)}
+  .vswitch a:not(.on):hover{color:var(--ink)}
+  .vswitch .vlbl{padding:0 8px 0 10px;color:var(--faint)}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  html[data-motion="off"] .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  html[data-motion="off"] .track,html[data-motion="off"] .tk,html[data-motion="off"] .disctrack{animation:none!important}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}.track,.tk,.disctrack{animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a href="#top" class="wm"><span class="dot"></span>RARARA ARKESTRA</a>
+    <div class="right">
+      <a href="#what" class="navlink">что это</a>
+      <a href="#host" class="navlink">кто ведёт</a>
+      <a href="#formats" class="navlink">форматы</a>
+      <a href="#cta" class="pill">написать</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ 00 · HERO ============ -->
+<header class="hero" id="top" data-screen-label="Hero">
+  <div class="wrap">
+    <div class="mvt" style="border-top:none;padding-top:0">
+      <span class="no">00</span><span class="nm"><b>Увертюра</b></span>
+      <span class="tail">музыкальная импровизация для групп · ведёт дима устинов</span>
+    </div>
+    <h1>Каждый&nbsp;— уже <em>музыкант.</em> Даже если узнал об&nbsp;этом сегодня.</h1>
+    <div class="sub">
+      <p>Дима Устинов и его команда проводят музыкальные сессии, на которых люди без опыта за несколько часов начинают играть вместе.</p>
+      <div>
+        <div class="cta-row">
+          <a href="#cta" class="btn">Рассказать про группу →</a>
+          <a href="#what" class="btn ghost">Как это работает</a>
+        </div>
+        <div class="hero-meta" style="margin-top:22px">уметь играть&nbsp;— не&nbsp;нужно<br>европа и не&nbsp;только · часть perfect&nbsp;days</div>
+      </div>
+    </div>
+  </div>
+  <div class="band hero-band reveal">
+    <img src="assets/photo_2026-06-08 12.54.15.jpeg" alt="Музыкальная сессия RARARA ARKESTRA" loading="eager">
+    <div class="cap">RARARA ARKESTRA · live session</div>
+  </div>
+</header>
+
+<!-- film strip 1 -->
+<div class="strip">
+  <div class="track">
+    <div class="frame"><span class="ix">01</span><img src="assets/000000780010 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">02</span><img src="assets/photo_2026-06-08 13.22.18.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">03</span><img src="assets/000000800006 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">04</span><img src="assets/000000790035 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">05</span><img src="assets/000000780008 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">06</span><img src="assets/photo_2026-06-08 12.54.17.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">01</span><img src="assets/000000780010 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">02</span><img src="assets/photo_2026-06-08 13.22.18.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">03</span><img src="assets/000000800006 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">04</span><img src="assets/000000790035 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">05</span><img src="assets/000000780008 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">06</span><img src="assets/photo_2026-06-08 12.54.17.jpeg" alt="" loading="lazy"></div>
+  </div>
+</div>
+
+<!-- ticker -->
+<div class="ticker">
+  <div class="tk">
+    <span>музыкальная импровизация для групп</span><span class="dot">✶</span>
+    <span>ведёт дима устинов</span><span class="dot">✶</span>
+    <span>уметь играть не нужно</span><span class="dot">✶</span>
+    <span>музыкальная импровизация для групп</span><span class="dot">✶</span>
+    <span>ведёт дима устинов</span><span class="dot">✶</span>
+    <span>уметь играть не нужно</span><span class="dot">✶</span>
+  </div>
+</div>
+
+<!-- ============ 01 · WHAT ============ -->
+<section id="what" data-screen-label="Что это">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">01</span><span class="nm"><b>Что это</b></span><span class="tail">для группы, не для сцены</span></div>
+    <div class="head">
+      <h2>Музыкальная импровизация <em>для&nbsp;группы</em></h2>
+      <p class="hp">Это не концерт, где слушают, и не урок с теорией и нотами. Группа делает общий звук с нуля — вживую, вместе.</p>
+    </div>
+    <div class="feat3">
+      <div class="feat"><div class="fno">01</div><div class="ft">Играть умеют все</div><div class="fd">Уметь — не нужно. Незнакомые инструменты ставят всех в равные условия: и руководитель, и новичок начинают с одной точки.</div></div>
+      <div class="feat"><div class="fno">02</div><div class="ft">Звучание собирают сами</div><div class="fd">Это не концерт, где слушают, и не урок с теорией и нотами. Группа делает общий звук с нуля, вживую.</div></div>
+      <div class="feat"><div class="fno">03</div><div class="ft">Это совместное переживание</div><div class="fd">Не тимбилдинг и не развлечение, а опыт, после которого группа иначе слышит и чувствует друг друга.</div></div>
+    </div>
+    <div class="vid"><button class="vplay" type="button" data-yt="_kpWQrY3aGg"><img src="assets/000000800006 (1).jpg" alt="RARARA — сессия" loading="lazy"><span class="vlabel">RARARA · сессия</span><span class="pbtn">▶</span></button></div>
+  </div>
+</section>
+
+<!-- ============ 02 · HOST ============ -->
+<section class="host" id="host" data-screen-label="Кто ведёт">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">02</span><span class="nm"><b>Кто ведёт</b></span><span class="tail">музыкант · композитор · саунд-артист</span></div>
+    <div class="head" style="grid-template-columns:1fr">
+      <h2>Дима Устинов</h2>
+    </div>
+  </div>
+  <div class="band reveal" style="margin-top:clamp(28px,4vw,44px);height:clamp(360px,62vh,640px)">
+    <img src="assets/000043.JPG" alt="Дима Устинов" loading="lazy">
+    <div class="cap">Дима Устинов</div>
+  </div>
+  <div class="wrap reveal">
+    <div class="hostgrid">
+      <div class="hostbio">
+        <p class="intro">Музыкант, композитор и саунд-артист, который много лет собирает ансамбли из людей, никогда не игравших музыку.</p>
+        <p>Создал augmented piano — проект, где акустический рояль соединяется с электроникой и светом. Его интересует, как через звук и совместное действие между людьми возникает связь и меняется состояние группы.</p>
+      </div>
+      <blockquote class="hostq"><span class="k">его взгляд</span><q>Мне интересно, как музыка может лечить — и человека, и то, что происходит между людьми</q></blockquote>
+    </div>
+    <div class="scenes"><span class="k">сцены</span>augmented piano<span class="sep">·</span>Венецианская биеннале<span class="sep">·</span>Sonar, Барселона<span class="sep">·</span>Токийский кинофестиваль<span class="sep">·</span>Red Bull Music Academy</div>
+    <div class="music">
+      <div class="k">его музыка</div>
+      <div class="discstrip">
+        <div class="disctrack">
+          <a class="acard" href="https://band.link/81EAa" target="_blank" rel="noopener"><div class="ah">Зарайск</div><div class="ad">«Лучшее, что я пока сделал. Альбом, с которого началась моя новая музыкальная жизнь после мощной перезагрузки».</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/9pieces" target="_blank" rel="noopener"><div class="ah">9 Pieces For Augmented Piano</div><div class="ad">«Продолжение фортепианного путешествия: ода любви к фортепиано и мечта собрать из него тотальную музыкальную машину».</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/lD4xe" target="_blank" rel="noopener"><div class="ah">ДОМ</div><div class="ad">Лайв с Андреем Бессоновым и Виктором Глазуновым на 24-м перформансе ДОМ — тотальная импровизация.</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/eveningofnothing" target="_blank" rel="noopener"><div class="ah">Evening Of Nothing</div><div class="ad">Лайв с ними же в Башмет-центре, записанный годом раньше.</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/5pbQ7" target="_blank" rel="noopener"><div class="ah">EYEYEYE</div><div class="ad">Дико психоделичный альбом, записанный с Андриешем в 2015-м.</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/81EAa" target="_blank" rel="noopener"><div class="ah">Зарайск</div><div class="ad">«Лучшее, что я пока сделал. Альбом, с которого началась моя новая музыкальная жизнь после мощной перезагрузки».</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/9pieces" target="_blank" rel="noopener"><div class="ah">9 Pieces For Augmented Piano</div><div class="ad">«Продолжение фортепианного путешествия: ода любви к фортепиано и мечта собрать из него тотальную музыкальную машину».</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/lD4xe" target="_blank" rel="noopener"><div class="ah">ДОМ</div><div class="ad">Лайв с Андреем Бессоновым и Виктором Глазуновым на 24-м перформансе ДОМ — тотальная импровизация.</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/eveningofnothing" target="_blank" rel="noopener"><div class="ah">Evening Of Nothing</div><div class="ad">Лайв с ними же в Башмет-центре, записанный годом раньше.</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/5pbQ7" target="_blank" rel="noopener"><div class="ah">EYEYEYE</div><div class="ad">Дико психоделичный альбом, записанный с Андриешем в 2015-м.</div><span class="al">слушать →</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · AUDIENCE ============ -->
+<section id="audience" data-screen-label="Кому">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">03</span><span class="nm"><b>Кому подходит</b></span><span class="tail">четыре адресата</span></div>
+    <div class="head">
+      <h2>Кому <em>подходит</em></h2>
+      <p class="hp">Формат встраивается в программу или становится самостоятельным событием.</p>
+    </div>
+    <div class="aud4">
+      <div class="a"><div class="ano">01</div><div class="ak">Фасилитаторам</div><div class="av">готовый блок для сессии, который можно встроить в свою программу</div></div>
+      <div class="a"><div class="ano">02</div><div class="ak">HR / People&amp;Culture</div><div class="av">возможность увидеть, как команда взаимодействует вне привычных ролей</div></div>
+      <div class="a"><div class="ano">03</div><div class="ak">Программам развития</div><div class="av">практика совместной работы, доверия и действий в неопределённости</div></div>
+      <div class="a"><div class="ano">04</div><div class="ak">Сообществам</div><div class="av">формат встречи, где люди не только знакомятся, но и делают что-то вместе</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- film strip 2 -->
+<div class="strip">
+  <div class="track rev">
+    <div class="frame"><span class="ix">07</span><img src="assets/photo_2026-06-08 12.54.13.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">08</span><img src="assets/photo_2026-06-08 12.54.41.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">09</span><img src="assets/000000800006 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">10</span><img src="assets/photo_2026-06-08 13.26.20.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">11</span><img src="assets/dima-2.jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">12</span><img src="assets/000000780008 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">07</span><img src="assets/photo_2026-06-08 12.54.13.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">08</span><img src="assets/photo_2026-06-08 12.54.41.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">09</span><img src="assets/000000800006 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">10</span><img src="assets/photo_2026-06-08 13.26.20.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">11</span><img src="assets/dima-2.jpg" alt="" loading="lazy"></div>
+    <div class="frame"><span class="ix">12</span><img src="assets/000000780008 (1).jpg" alt="" loading="lazy"></div>
+  </div>
+</div>
+
+<!-- ============ 04 · WHY ============ -->
+<section id="why" data-screen-label="Почему">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">04</span><span class="nm"><b>Почему работает</b></span><span class="tail">слышно то, что не видно</span></div>
+    <div class="head"><h2>Почему <em>работает</em></h2></div>
+    <div class="reasons">
+      <div class="reason"><div class="rn">01</div><div class="rt">В музыке сразу слышно то, что не видно на совещании</div><div class="rd">Кто слушает, кто берёт инициативу, кто держится в стороне, а кто тянет группу вперёд.</div></div>
+      <div class="reason"><div class="rn">02</div><div class="rt">Звук — это командный зачёт</div><div class="rd">В ансамбле нельзя выиграть в одиночку: либо группа звучит вместе, либо не звучит вообще.</div></div>
+      <div class="reason"><div class="rn">03</div><div class="rt">За несколько часов меняется не техника, а контакт</div><div class="rd">Научить играть за это время нельзя. Но можно поменять то, как люди слышат друг друга, — и звучание меняется сразу.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 · SKILL ============ -->
+<section id="skill" data-screen-label="Навык">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">05</span><span class="nm"><b>Импровизация — это навык</b></span><span class="tail">действие в моменте</span></div>
+    <div class="split rev">
+      <div class="im"><img src="assets/000000800006 (1).jpg" alt="" loading="lazy"><span class="tag">из сессии</span></div>
+      <div>
+        <h2>Импровизация — <em>это навык</em></h2>
+        <p class="body-p">Мир всё менее предсказуем: ценнее не следовать идеальному плану, а слышать, что происходит, и действовать в моменте. Музыкальная импровизация тренирует это напрямую — и начать может каждый. Музыка работает раньше слов, опыта и ролей; это общий язык, который уже есть у всех.</p>
+        <blockquote class="impq">«Главный навык сейчас — не играть по правилам, а совершать творческое действие в моменте».<span>— Дима Устинов</span></blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 · INSTRUMENTS ============ -->
+<section id="instruments" data-screen-label="Инструменты">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">06</span><span class="nm"><b>Инструменты</b></span><span class="tail">одна точка старта</span></div>
+    <div class="split">
+      <div class="im"><img src="assets/photo_2026-06-08 12.54.17.jpeg" alt="инструменты на сессии" loading="lazy"><span class="tag">инструменты на сессии</span></div>
+      <div>
+        <h2>Незнакомый инструмент <em>ставит всех в равные условия</em></h2>
+        <p class="body-p">В работе используются простые и непривычные инструменты — акустические и электронные. Никто не приходит с готовым преимуществом, поэтому и руководитель, и новичок оказываются в одной точке старта. Ошибиться здесь не страшно: важнее пробовать, слушать и включаться в общее движение.</p>
+        <div class="markers">слушать<span class="s">·</span>доверять<span class="s">·</span>пробовать<span class="s">·</span>вести<span class="s">·</span>уступать</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 · FROM SESSIONS ============ -->
+<section id="sessions" data-screen-label="Из сессий">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">07</span><span class="nm"><b>Из сессий</b></span><span class="tail">фрагменты</span></div>
+    <div class="head" style="grid-template-columns:1fr"><h2 style="font-size:clamp(30px,4vw,52px)">Фрагменты <em>из сессий</em></h2></div>
+    <div class="vstrip">
+      <div class="vframe"><img src="assets/photo_2026-06-08 12.54.13.jpeg" alt="" loading="lazy"><span class="vtag">сессия · 01</span></div>
+      <div class="vframe"><img src="assets/photo_2026-06-08 12.54.41.jpeg" alt="" loading="lazy"><span class="vtag">сессия · 02</span></div>
+      <div class="vframe"><img src="assets/photo_2026-06-08 13.26.20.jpeg" alt="" loading="lazy"><span class="vtag">сессия · 03</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 · OUTCOMES ============ -->
+<section id="after" data-screen-label="После">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">08</span><span class="nm"><b>Что остаётся после</b></span><span class="tail">материал для разговора</span></div>
+    <div class="head"><h2>Что остаётся <em>после</em></h2></div>
+    <div class="stk">
+      <div class="row"><div class="rn">01</div><div class="rt">Появляется опыт, в котором группа рискнула вместе и увидела, что может справиться</div></div>
+      <div class="row"><div class="rn">02</div><div class="rt">Возникает привычка внимательнее слышать друг друга, а не просто ждать своей очереди говорить</div></div>
+      <div class="row"><div class="rn">03</div><div class="rt">Становится понятнее, как из разных людей складывается общее действие</div></div>
+      <div class="row"><div class="rn">04</div><div class="rt">Проявляется, кто как ведёт себя в группе, — и это даёт материал для разговора после сессии</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 · QUOTES ============ -->
+<div class="cloud reveal" data-screen-label="Голоса">
+  <div class="wrap">
+    <div class="mvt" style="border-top:none;padding-top:0"><span class="no">09</span><span class="nm"><b>Из отзывов участников</b></span><span class="tail">голоса</span></div>
+    <div class="qs">
+      <q class="m">Я бегал за музыкой, а не она за мной</q>
+      <q class="l">Перестаёшь чувствовать себя отдельно от&nbsp;других</q>
+      <q class="s">Это была динамическая медитация</q>
+      <q class="m">Музыка создаёт пространство, чтобы прожить что-то своё</q>
+      <q class="s">За день прожил целую жизнь</q>
+      <q class="l">Хотелось выстраивать отношения из&nbsp;какого-то центра</q>
+      <q class="s">Музыка ведёт, а ты бережно проживаешь важное</q>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 10 · TURNKEY ============ -->
+<section id="turnkey" data-screen-label="Как устроено">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">10</span><span class="nm"><b>Как это устроено</b></span><span class="tail">под ключ или частью</span></div>
+    <div class="head"><h2>Можем сделать <em>всё целиком</em> или подключиться к части проекта</h2></div>
+    <div class="steps">
+      <span class="st">Знакомство</span><span class="sep">→</span>
+      <span class="st">Практики на внимание</span><span class="sep">→</span>
+      <span class="st">Импровизация</span><span class="sep">→</span>
+      <span class="st">Финал, где группа играет вместе</span>
+    </div>
+    <div class="tklines">
+      <p><span class="pn">A</span><span><b>Инструменты, звук, настройку и сопровождение</b> берём на себя — никто не остаётся один на один с незнакомым инструментом.</span></p>
+      <p><span class="pn">B</span><span>Проведём событие <b>полностью</b> или встроимся в уже существующую программу — зависит от задачи, формата и состава группы.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 · FORMATS ============ -->
+<section id="formats" data-screen-label="Форматы">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">11</span><span class="nm"><b>Форматы</b></span><span class="tail">три масштаба</span></div>
+    <div class="head" style="grid-template-columns:1fr"><h2 style="font-size:clamp(34px,5vw,68px)">Форматы</h2></div>
+    <div class="fcards">
+      <div class="fcard">
+        <div class="fim"><img src="assets/000000780010 (1).jpg" alt="" loading="lazy"></div>
+        <div class="fc-b"><div class="fc-l">3–4 часа · одна сессия</div><div class="fc-h"><span class="num">01</span> Полдня</div><div class="fc-d">Подходит как самостоятельное событие или часть offsite-программы.</div></div>
+      </div>
+      <div class="fcard">
+        <div class="fim"><img src="assets/000000800006 (1).jpg" alt="" loading="lazy"></div>
+        <div class="fc-b"><div class="fc-l">около 8 часов · несколько сессий</div><div class="fc-h"><span class="num">02</span> Полный день</div><div class="fc-d">Формат с паузами и более спокойным ритмом работы.</div></div>
+      </div>
+      <div class="fcard">
+        <div class="fim"><img src="assets/000000790035 (1).jpg" alt="" loading="lazy"></div>
+        <div class="fc-b"><div class="fc-l">2–3 дня · выездной формат</div><div class="fc-h"><span class="num">03</span> Ретрит</div><div class="fc-d">Даёт больше времени на погружение, развитие процесса и неформальное общение.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12 · CASE ============ -->
+<section id="case" data-screen-label="Кейс">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">12</span><span class="nm"><b>Кейс</b></span><span class="tail">Горис, Армения</span></div>
+    <div class="casegrid">
+      <img class="caseimg" src="assets/case-goris.jpg" alt="Горис, Армения" loading="lazy">
+      <div class="casebody">
+        <div class="ce">кейс · горис, армения</div>
+        <div class="rl">руководители местных компаний</div>
+        <p class="ct">Днём участники проходили групповые практики, а вечером собирались на музыкальные сессии. К концу второго дня расходиться уже не хотелось: группа вошла в общий ритм и захотела оставаться в нём дольше.</p>
+        <p class="punch">«На третий день на сессию заглянули трое наблюдателей миссии ООН из Венгрии. Они сказали, что это звучит как их народная музыка, и не поверили, что играют люди, которые впервые взяли инструменты в руки».</p>
+        <div class="src">рассказывает дима</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13 · FAQ ============ -->
+<section id="faq" data-screen-label="Вопросы">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">13</span><span class="nm"><b>Частые вопросы</b></span><span class="tail">коротко</span></div>
+    <div class="head" style="grid-template-columns:1fr"><h2 style="font-size:clamp(32px,4.6vw,60px)">Частые вопросы</h2></div>
+    <div class="faq">
+      <details><summary>Нужно ли уметь играть на инструментах?<span class="ic"></span></summary><div class="ans">Нет. Всё устроено так, чтобы человек без опыта легко включился и получил удовольствие.</div></details>
+      <details><summary>Сколько это длится?<span class="ic"></span></summary><div class="ans">От одной сессии на 3–4 часа до выезда на два-три дня — зависит от формата.</div></details>
+      <details><summary>Сколько человек может участвовать?<span class="ic"></span></summary><div class="ans">Размер группы обсуждаем под задачу и формат.</div></details>
+      <details><summary>Что вы привозите, а что нужно от нас?<span class="ic"></span></summary><div class="ans">Инструменты и звук — наши, всё настраиваем сами. С вашей стороны — место и участники. Можем взять на себя и больше: зависит от проекта.</div></details>
+      <details><summary>А если кто-то стесняется?<span class="ic"></span></summary><div class="ans">Никто не солирует и не выступает. Можно участвовать ровно в том объёме, к которому человек готов.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14 · CLOSING ============ -->
+<section class="closing" id="cta" data-screen-label="Контакт">
+  <div class="wrap reveal">
+    <div class="mvt" style="justify-content:center" ><span class="no">14</span><span class="nm"><b>Контакт</b></span></div>
+    <h2>Расскажите о <em>своей&nbsp;группе</em></h2>
+    <p class="body-p">У нас нет готового универсального пакета. Напишите, кто вы, какая у вас группа и зачем вам такая сессия, — мы предложим формат под ваш запрос.</p>
+    <div class="cta-row">
+      <a href="mailto:hello@rarara.example" class="btn">Написать нам →</a>
+    </div>
+    <div class="fine">в году немного дат · лучше писать заранее</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fin">
+    <div><span class="accent">✶</span> RARARA ARKESTRA · часть <b>perfect days</b></div>
+    <div style="text-align:right">европа и не&nbsp;только · © 2026</div>
+  </div>
+</footer>
+
+<!-- version switcher -->
+<div class="vswitch">
+  <span class="vlbl">design</span>
+  <a href="index.html">01 · Партитура</a>
+  <a href="v2.html" class="on">02 · Постер</a>
+</div>
+
+<!-- tweaks mount -->
+<div id="tweaks-root"></div>
+
+<script>
+  // nav border on scroll
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>10),{passive:true});
+  // reveal
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // youtube facade — load player only on click (avoids autoplay/player errors on load)
+  document.querySelectorAll('.vid .vplay').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const id=btn.dataset.yt;
+      const f=document.createElement('iframe');
+      f.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+      f.title='RARARA — сессия';
+      f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      f.allowFullscreen=true;
+      f.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:0';
+      btn.replaceWith(f);
+    });
+  });
+</script>
+
+<!-- React + Babel for the Tweaks panel island -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="tweaks-app-v2.jsx"></script>
+</body>
+</html>
