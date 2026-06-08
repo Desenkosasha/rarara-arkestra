@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RARARA ARKESTRA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ECE4D1;--panel:#E2D9C2;--ink:#1B1A17;--muted:#6E6553;--faint:#A99E86;
+    --line:rgba(27,26,23,.15);--accent:#E1542A;--green:#235C3E;
+    --disp:"IBM Plex Sans",system-ui,sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;line-height:1.55;position:relative;overflow-x:hidden}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.04;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  a{color:inherit;text-decoration:none}
+  em{font-style:italic;font-weight:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
+  .narrow{max-width:760px;margin-left:auto;margin-right:auto}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--green)}
+
+  .nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(8px);background:rgba(242,236,224,.72);border-bottom:1px solid transparent;transition:border-color .3s}
+  .nav.scrolled{border-color:var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .wm{font-family:var(--disp);font-weight:600;letter-spacing:.04em;font-size:16px}
+  .pill{font-size:13px;font-weight:500;border:1px solid var(--ink);border-radius:100px;padding:9px 20px;transition:.2s}
+  .pill:hover{background:var(--ink);color:var(--bg)}
+
+  .hero{padding:clamp(130px,18vh,210px) 0 clamp(46px,7vh,86px);text-align:center}
+  .hero .eyebrow{margin-bottom:30px}
+  .hero h1{font-family:var(--disp);font-weight:500;font-size:clamp(40px,6.6vw,88px);line-height:1.0;letter-spacing:-.03em;max-width:17ch;margin:0 auto}
+  .hero p{font-size:clamp(17px,1.7vw,20px);color:var(--muted);max-width:50ch;margin:28px auto 0}
+  .hero .cta{margin-top:38px}
+  .btn{display:inline-block;font-size:14px;font-weight:600;background:var(--ink);color:var(--bg);border-radius:100px;padding:15px 30px;transition:.2s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.18)}
+
+  .fu{opacity:0;transform:translateY(22px);animation:fu .9s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes fu{to{opacity:1;transform:none}}
+  .d1{animation-delay:.05s}.d2{animation-delay:.18s}.d3{animation-delay:.31s}.d4{animation-delay:.44s}.d5{animation-delay:.6s}
+
+  .strip{overflow:hidden;padding:6px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .track{display:flex;gap:16px;width:max-content;animation:marq 48s linear infinite}
+  .track.rev{animation-direction:reverse;animation-duration:54s}
+  .strip:hover .track{animation-play-state:paused}
+  @keyframes marq{to{transform:translateX(-50%)}}
+  .card{width:clamp(220px,24vw,300px);height:clamp(300px,32vw,400px);flex:none;overflow:hidden;border-radius:4px;background:var(--panel)}
+  .card img{width:100%;height:100%;object-fit:cover;display:block}
+
+  .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:18px 0}
+  .ticker .tk{display:flex;width:max-content;animation:marq 40s linear infinite}
+  .ticker span{font-family:var(--disp);font-size:clamp(15px,1.7vw,20px);letter-spacing:.04em;padding:0 26px;white-space:nowrap}
+  .ticker span .s{color:var(--accent)}
+
+  section{padding:clamp(78px,12vh,160px) 0}
+  .center{text-align:center}
+  h2{font-family:var(--disp);font-weight:500;font-size:clamp(30px,4.6vw,60px);line-height:1.05;letter-spacing:-.025em}
+  .center h2{max-width:18ch;margin:0 auto}
+  .body-p{font-size:clamp(17px,1.7vw,20px);color:var(--muted);line-height:1.6}
+  .center .body-p{max-width:52ch;margin:26px auto 0}
+
+  .vid{position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:6px;background:#000;margin-top:44px}
+  .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+  /* feature rows + reasons (stacked) */
+  .reasons{margin-top:18px}
+  .reason{border-top:1px solid var(--line);padding:clamp(26px,3.5vw,42px) 0;text-align:center}
+  .reason:last-child{border-bottom:1px solid var(--line)}
+  .reason .rt{font-family:var(--disp);font-size:clamp(21px,2.5vw,30px);font-weight:500;letter-spacing:-.01em}
+  .reason .rd{font-size:16px;color:var(--muted);max-width:48ch;margin:8px auto 0;line-height:1.55}
+  .impq{font-family:var(--disp);font-style:italic;font-size:clamp(18px,2.2vw,26px);line-height:1.35;max-width:32ch;margin:34px auto 0;color:var(--ink)}
+  .impq span{display:block;font-style:normal;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:16px}
+  /* features 3-col */
+  .feat3{display:grid;grid-template-columns:1fr;gap:clamp(30px,3vw,46px);margin-top:clamp(36px,4vw,56px);text-align:center}
+  @media(min-width:760px){.feat3{grid-template-columns:repeat(3,1fr);gap:clamp(28px,3vw,48px)}}
+  .feat .ft{font-family:var(--disp);font-size:clamp(20px,2.1vw,26px);font-weight:500;letter-spacing:-.01em}
+  .feat .fd{font-size:15px;color:var(--muted);line-height:1.55;margin-top:12px;max-width:34ch;margin-left:auto;margin-right:auto}
+  /* audience 4-col */
+  .aud4{display:grid;grid-template-columns:1fr;margin-top:18px;border-top:1px solid var(--line)}
+  .aud4 .a{padding:22px 0;border-bottom:1px solid var(--line)}
+  @media(min-width:760px){.aud4{grid-template-columns:repeat(4,1fr);gap:clamp(20px,2.4vw,34px);border-top:none}.aud4 .a{border-bottom:none;border-top:1px solid var(--line);padding:24px 0 0}}
+  .aud4 .ak{font-family:var(--disp);font-size:clamp(18px,1.7vw,21px);font-weight:600}
+  .aud4 .av{font-size:14px;color:var(--muted);line-height:1.5;margin-top:10px}
+  /* discography carousel */
+  .discstrip{overflow:hidden;margin-top:18px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+  .disctrack{display:flex;gap:16px;width:max-content;animation:marq 55s linear infinite}
+  .discstrip:hover .disctrack{animation-play-state:paused}
+  .acard{flex:none;width:clamp(270px,28vw,340px);border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:clamp(24px,2.4vw,30px);display:flex;flex-direction:column;gap:10px}
+  .acard .ah{font-family:var(--disp);font-size:clamp(19px,2vw,23px);font-weight:600}
+  .acard .ad{font-size:14px;color:var(--muted);line-height:1.5;flex:1}
+  .acard .al{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  /* vertical video row */
+  .vstrip{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:flex-start}
+  .vframe{flex:none;width:clamp(220px,24vw,300px);aspect-ratio:9/16;border-radius:8px;overflow:hidden;background:#16110b;line-height:0}
+  .vframe video{display:block;width:100%;height:100%;object-fit:cover}
+  /* case split */
+  .casegrid{display:grid;grid-template-columns:1fr;overflow:hidden;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+  @media(min-width:820px){.casegrid{grid-template-columns:.85fr 1.15fr}}
+  .casegrid .caseimg{width:100%;height:100%;min-height:clamp(320px,42vw,560px);object-fit:cover;display:block}
+  .casegrid .casebody{padding:clamp(28px,4vw,54px)}
+  .casegrid .ce{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:16px}
+  .casegrid .rl{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .casegrid .ct{font-size:clamp(16px,1.7vw,19px);color:var(--muted);margin-top:14px;line-height:1.6}
+  .casegrid .punch{font-family:var(--disp);font-style:italic;font-weight:400;font-size:clamp(20px,2.4vw,30px);line-height:1.3;margin-top:22px}
+  .casegrid .src{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:18px}
+
+  /* host */
+  .host2 .bigpic{width:100%;height:clamp(360px,60vh,660px);object-fit:cover;object-position:center 28%;border-radius:6px;display:block;margin:clamp(34px,5vw,58px) 0 0}
+  .hostgrid{display:grid;grid-template-columns:1fr;gap:clamp(26px,3.5vw,52px);margin-top:clamp(34px,4vw,54px);align-items:start}
+  @media(min-width:820px){.hostgrid{grid-template-columns:1.3fr 1fr}}
+  .hostbio .intro{font-family:var(--disp);font-weight:500;font-size:clamp(20px,2.2vw,27px);color:var(--ink);line-height:1.3;margin-bottom:18px;max-width:24ch}
+  .hostbio p{font-size:17px;color:var(--muted);line-height:1.64;margin-bottom:13px;max-width:48ch}
+  .hostbio p b{color:var(--ink);font-weight:600}
+  .hostq{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:clamp(24px,3vw,36px)}
+  .hostq .k{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px}
+  .hostq q{font-family:var(--disp);font-style:italic;font-size:clamp(18px,2.1vw,25px);line-height:1.38;color:var(--ink);quotes:"«" "»"}
+  .scenes{margin-top:clamp(30px,4vw,48px);border-top:1px solid var(--line);padding-top:22px;font-size:15px;color:var(--muted);line-height:1.7}
+  .scenes .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);font-weight:600;margin-right:14px}
+  .music{max-width:none;margin-top:clamp(30px,4vw,46px)}
+  .music .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:12px}
+  .music .box{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:100px;padding:12px 18px;max-width:520px}
+  .music .box .pl{width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;flex:none}
+  .music .box .pl svg{width:13px;height:13px;margin-left:2px}
+  .music .box p{font-size:13px;color:var(--muted)}
+  .disc{max-width:820px;margin-top:6px}
+  .disc .album{display:block;border-top:1px solid var(--line);padding:clamp(16px,2vw,22px) 0;transition:padding .2s}
+  .disc .album:last-child{border-bottom:1px solid var(--line)}
+  .disc .album:hover{padding-left:10px}
+  .disc .al-h{font-family:var(--disp);font-size:clamp(18px,2vw,23px);font-weight:600;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .disc .al-l{font-family:var(--body);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .disc .al-d{font-size:14px;color:var(--muted);line-height:1.5;margin-top:6px;max-width:62ch}
+
+  /* audience */
+  .stk{max-width:760px;margin:14px auto 0}
+  .stk .row{border-top:1px solid var(--line);padding:clamp(20px,2.6vw,30px) 0}
+  .stk .row:last-child{border-bottom:1px solid var(--line)}
+  .stk.aud .row{display:grid;grid-template-columns:1fr;gap:6px}
+  @media(min-width:640px){.stk.aud .row{grid-template-columns:.7fr 1.5fr;align-items:baseline;gap:30px}}
+  .stk.aud .k{font-family:var(--disp);font-size:clamp(18px,2vw,23px);font-weight:600}
+  .stk.aud .v{font-size:clamp(16px,1.7vw,19px);color:var(--muted)}
+  .stk .rt{font-family:var(--disp);font-size:clamp(19px,2.1vw,25px);font-weight:500;line-height:1.3}
+
+  /* split instruments */
+  .split{display:grid;grid-template-columns:1fr;gap:clamp(28px,4vw,60px);align-items:center}
+  @media(min-width:860px){.split{grid-template-columns:1fr 1fr}.split.rev .im{order:2}}
+  .split .im img{width:100%;height:clamp(340px,46vw,540px);object-fit:cover;border-radius:6px;display:block}
+  .split h2{max-width:14ch}
+  .split .body-p{margin-top:22px}
+  .markers{margin-top:26px;font-family:var(--disp);font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .markers .s{color:var(--accent)}
+
+  /* quotes cloud */
+  .cloud{background:var(--panel);padding:clamp(70px,11vh,140px) 0}
+  .cloud .lbl{text-align:center;margin-bottom:46px}
+  .cloud .qs{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:clamp(16px,2.4vw,34px);max-width:1060px;margin:0 auto}
+  .cloud .qs q{display:block;font-family:var(--disp);font-style:italic;font-weight:400;line-height:1.24;color:var(--ink);quotes:"«" "»"}
+  .cloud .qs q.s{font-size:clamp(15px,1.5vw,18px);max-width:20ch;color:var(--muted)}
+  .cloud .qs q.m{font-size:clamp(17px,1.9vw,23px);max-width:17ch}
+  .cloud .qs q.l{font-size:clamp(20px,2.4vw,30px);max-width:14ch}
+
+  /* video band */
+  .vband{position:relative;width:100vw;left:50%;margin-left:-50vw;height:clamp(340px,62vh,620px);overflow:hidden;background:#16110b}
+  .vband video{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* turnkey */
+  .steps{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 0;margin:18px auto 0;max-width:840px}
+  .steps .st{font-family:var(--disp);font-size:clamp(18px,2.2vw,26px);font-weight:500;letter-spacing:-.01em}
+  .steps .sep{color:var(--accent);margin:0 clamp(12px,1.6vw,22px)}
+  .tklines{margin:clamp(36px,4vw,52px) auto 0;max-width:620px}
+  .tklines p{font-size:clamp(16px,1.7vw,19px);color:var(--muted);line-height:1.55;padding:14px 0;border-top:1px solid var(--line)}
+  .tklines p:last-child{border-bottom:1px solid var(--line)}
+  .tklines b{color:var(--ink);font-weight:600}
+
+  /* format cards */
+  .fcards{display:grid;grid-template-columns:1fr;gap:18px;margin-top:18px}
+  @media(min-width:780px){.fcards{grid-template-columns:repeat(3,1fr)}}
+  .fcard{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel);display:flex;flex-direction:column}
+  .fcard img{width:100%;height:clamp(190px,18vw,230px);object-fit:cover;display:block}
+  .fcard .fc-b{padding:clamp(22px,2.4vw,30px);display:flex;flex-direction:column;gap:10px;flex:1}
+  .fcard .fc-l{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);font-weight:600}
+  .fcard .fc-h{font-family:var(--disp);font-size:clamp(24px,2.6vw,32px);font-weight:500;letter-spacing:-.01em}
+  .fcard .fc-d{font-size:15px;color:var(--muted);line-height:1.5}
+
+  /* case card */
+  .casecard{max-width:880px;margin:0 auto;border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:clamp(30px,4.5vw,60px);text-align:center}
+  .casecard .rl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .casecard .ct{font-size:clamp(16px,1.7vw,19px);color:var(--muted);margin-top:18px;line-height:1.6}
+  .casecard .punch{font-family:var(--disp);font-style:italic;font-weight:400;font-size:clamp(21px,2.7vw,34px);line-height:1.28;margin-top:26px;quotes:"«" "»"}
+  .casecard .src{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:20px}
+
+  /* faq */
+  .faq{max-width:820px;margin:18px auto 0}
+  details{border-top:1px solid var(--line)}
+  details:last-child{border-bottom:1px solid var(--line)}
+  summary{list-style:none;cursor:pointer;padding:clamp(20px,2.6vw,28px) 0;display:flex;justify-content:space-between;align-items:center;gap:20px;font-family:var(--disp);font-size:clamp(18px,2vw,24px);font-weight:500}
+  summary::-webkit-details-marker{display:none}
+  summary .ic{flex:none;width:24px;height:24px;position:relative}
+  summary .ic::before,summary .ic::after{content:"";position:absolute;background:var(--ink);left:50%;top:50%}
+  summary .ic::before{width:14px;height:1.5px;transform:translate(-50%,-50%)}
+  summary .ic::after{width:1.5px;height:14px;transform:translate(-50%,-50%);transition:transform .3s}
+  details[open] summary .ic::after{transform:translate(-50%,-50%) scaleY(0)}
+  details .ans{padding:0 0 clamp(22px,2.6vw,28px);color:var(--muted);font-size:16px;line-height:1.6;max-width:60ch}
+
+  .closing{text-align:center}
+  .closing h2{max-width:16ch;margin:0 auto}
+  .closing .body-p{max-width:42ch;margin:24px auto 0}
+  .closing .btn{margin-top:34px}
+  .closing .fine{margin-top:34px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+
+  footer{border-top:1px solid var(--line);padding:38px 0 56px}
+  .fin{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);line-height:1.9}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.fu,.reveal{opacity:1!important;transform:none!important;animation:none!important}.track,.tk{animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav"><div class="wrap nav-in"><div class="wm">RARARA ARKESTRA</div><a href="#cta" class="pill">написать</a></div></nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow fu d1">музыкальная импровизация для групп · ведёт дима устинов</div>
+    <h1 class="fu d2">Каждый — уже <em>музыкант.</em> Даже если узнал об этом сегодня.</h1>
+    <p class="fu d3">Дима Устинов и его команда проводят музыкальные сессии, на которых люди без опыта за несколько часов начинают играть вместе.</p>
+    <div class="cta fu d4"><a href="#cta" class="btn">Рассказать про группу</a></div>
+  </div>
+</header>
+
+<!-- CAROUSEL 1 -->
+<div class="strip fu d5">
+  <div class="track">
+    <div class="card"><img src="assets/000000780010%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000790021%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000800006%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000790035%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000780008%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2013.22.18.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000780010%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000790021%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000800006%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000790035%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000780008%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2013.22.18.jpeg" alt="" loading="lazy"></div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="tk">
+    <span>музыкальная импровизация для групп<span class="s"> · </span></span>
+    <span>ведёт дима устинов<span class="s"> · </span></span>
+    <span>уметь играть не нужно<span class="s"> · </span></span>
+    <span>музыкальная импровизация для групп<span class="s"> · </span></span>
+    <span>ведёт дима устинов<span class="s"> · </span></span>
+    <span>уметь играть не нужно<span class="s"> · </span></span>
+  </div>
+</div>
+
+<!-- WHAT / 3 features -->
+<section class="center" id="what">
+  <div class="wrap reveal">
+    <h2>Музыкальная импровизация <em>для группы</em></h2>
+    <div class="feat3">
+      <div class="feat"><div class="ft">Играть умеют все</div><div class="fd">Уметь — не нужно. Незнакомые инструменты ставят всех в равные условия: и руководитель, и новичок начинают с одной точки.</div></div>
+      <div class="feat"><div class="ft">Звучание собирают сами</div><div class="fd">Это не концерт, где слушают, и не урок с теорией и нотами. Группа делает общий звук с нуля, вживую.</div></div>
+      <div class="feat"><div class="ft">Это совместное переживание</div><div class="fd">Не тимбилдинг и не развлечение, а опыт, после которого группа иначе слышит и чувствует друг друга.</div></div>
+    </div>
+    <div class="narrow"><div class="vid"><iframe src="https://www.youtube.com/embed/_kpWQrY3aGg" title="RARARA — сессия" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+  </div>
+</section>
+
+<!-- HOST -->
+<section class="host2">
+  <div class="wrap reveal">
+    <div class="center"><div class="eyebrow" style="margin-bottom:16px">кто ведёт</div><h2 style="font-size:clamp(40px,6.4vw,90px);max-width:none">Дима Устинов</h2></div>
+    <img class="bigpic" src="assets/000043.JPG" alt="Дима Устинов" loading="lazy">
+    <div class="hostgrid">
+      <div class="hostbio">
+        <p class="intro">Музыкант, композитор и саунд-артист, который много лет собирает ансамбли из людей, никогда не игравших музыку.</p>
+        <p>Создал augmented piano — проект, где акустический рояль соединяется с электроникой и светом. Его интересует, как через звук и совместное действие между людьми возникает связь и меняется состояние группы.</p>
+      </div>
+      <blockquote class="hostq"><span class="k">его взгляд</span><q>Мне интересно, как музыка может лечить — и человека, и то, что происходит между людьми</q></blockquote>
+    </div>
+    <div class="scenes"><span class="k">сцены</span>augmented piano · Венецианская биеннале · Sonar, Барселона · Токийский кинофестиваль · Red Bull Music Academy</div>
+    <div class="music">
+      <div class="k">его музыка</div>
+      <div class="discstrip">
+        <div class="disctrack">
+          <a class="acard" href="https://band.link/81EAa" target="_blank" rel="noopener"><div class="ah">Зарайск</div><div class="ad">«Лучшее, что я пока сделал. Альбом, с которого началась моя новая музыкальная жизнь после мощной перезагрузки».</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/9pieces" target="_blank" rel="noopener"><div class="ah">9 Pieces For Augmented Piano</div><div class="ad">«Продолжение фортепианного путешествия: ода любви к фортепиано и мечта собрать из него тотальную музыкальную машину».</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/lD4xe" target="_blank" rel="noopener"><div class="ah">ДОМ</div><div class="ad">Лайв с Андреем Бессоновым и Виктором Глазуновым на 24-м перформансе ДОМ — тотальная импровизация.</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/eveningofnothing" target="_blank" rel="noopener"><div class="ah">Evening Of Nothing</div><div class="ad">Лайв с ними же в Башмет-центре, записанный годом раньше.</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/5pbQ7" target="_blank" rel="noopener"><div class="ah">EYEYEYE</div><div class="ad">Дико психоделичный альбом, записанный с Андриешем в 2015-м.</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/81EAa" target="_blank" rel="noopener"><div class="ah">Зарайск</div><div class="ad">«Лучшее, что я пока сделал. Альбом, с которого началась моя новая музыкальная жизнь после мощной перезагрузки».</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/9pieces" target="_blank" rel="noopener"><div class="ah">9 Pieces For Augmented Piano</div><div class="ad">«Продолжение фортепианного путешествия: ода любви к фортепиано и мечта собрать из него тотальную музыкальную машину».</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/lD4xe" target="_blank" rel="noopener"><div class="ah">ДОМ</div><div class="ad">Лайв с Андреем Бессоновым и Виктором Глазуновым на 24-м перформансе ДОМ — тотальная импровизация.</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/eveningofnothing" target="_blank" rel="noopener"><div class="ah">Evening Of Nothing</div><div class="ad">Лайв с ними же в Башмет-центре, записанный годом раньше.</div><span class="al">слушать →</span></a>
+          <a class="acard" href="https://band.link/5pbQ7" target="_blank" rel="noopener"><div class="ah">EYEYEYE</div><div class="ad">Дико психоделичный альбом, записанный с Андриешем в 2015-м.</div><span class="al">слушать →</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="center">
+  <div class="wrap reveal">
+    <h2>Кому <em>подходит</em></h2>
+    <div class="aud4">
+      <div class="a"><div class="ak">Фасилитаторам</div><div class="av">готовый блок для сессии, который можно встроить в свою программу</div></div>
+      <div class="a"><div class="ak">HR / People&amp;Culture</div><div class="av">возможность увидеть, как команда взаимодействует вне привычных ролей</div></div>
+      <div class="a"><div class="ak">Программам развития</div><div class="av">практика совместной работы, доверия и действий в неопределённости</div></div>
+      <div class="a"><div class="ak">Сообществам</div><div class="av">формат встречи, где люди не только знакомятся, но и делают что-то вместе</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAROUSEL between кому and почему -->
+<div class="strip reveal">
+  <div class="track">
+    <div class="card"><img src="assets/photo_2026-06-08%2012.54.13.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000790021%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2012.54.41.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000800006%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000780008%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2013.26.20.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2012.54.13.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000790021%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2012.54.41.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000800006%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/000000780008%20(1).jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2013.26.20.jpeg" alt="" loading="lazy"></div>
+  </div>
+</div>
+
+<!-- WHY -->
+<section class="center">
+  <div class="wrap reveal">
+    <h2>Почему <em>работает</em></h2>
+    <div class="reasons narrow">
+      <div class="reason"><div class="rt">В музыке сразу слышно то, что не видно на совещании</div><div class="rd">Кто слушает, кто берёт инициативу, кто держится в стороне, а кто тянет группу вперёд.</div></div>
+      <div class="reason"><div class="rt">Звук — это командный зачёт</div><div class="rd">В ансамбле нельзя выиграть в одиночку: либо группа звучит вместе, либо не звучит вообще.</div></div>
+      <div class="reason"><div class="rt">За несколько часов меняется не техника, а контакт</div><div class="rd">Научить играть за это время нельзя. Но можно поменять то, как люди слышат друг друга, — и звучание меняется сразу.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPRO AS SKILL -->
+<section>
+  <div class="wrap reveal">
+    <div class="split rev">
+      <div class="im"><img src="assets/000000800006%20(1).jpg" alt="" loading="lazy"></div>
+      <div>
+        <h2>Импровизация — <em>это навык</em></h2>
+        <p class="body-p">Мир всё менее предсказуем: ценнее не следовать идеальному плану, а слышать, что происходит, и действовать в моменте. Музыкальная импровизация тренирует это напрямую — и начать может каждый. Музыка работает раньше слов, опыта и ролей; это общий язык, который уже есть у всех.</p>
+        <blockquote class="impq" style="margin-left:0">«Главный навык сейчас — не играть по правилам, а совершать творческое действие в моменте».<span>— Дима Устинов</span></blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUMENTS split -->
+<section>
+  <div class="wrap reveal">
+    <div class="split">
+      <div class="im"><img src="assets/photo_2026-06-08%2012.54.17.jpeg" alt="инструменты на сессии" loading="lazy"></div>
+      <div>
+        <h2>Незнакомый инструмент <em>ставит всех в равные условия</em></h2>
+        <p class="body-p">В работе используются простые и непривычные инструменты — акустические и электронные. Никто не приходит с готовым преимуществом, поэтому и руководитель, и новичок оказываются в одной точке старта. Ошибиться здесь не страшно: важнее пробовать, слушать и включаться в общее движение.</p>
+        <div class="markers">слушать <span class="s">·</span> доверять <span class="s">·</span> пробовать <span class="s">·</span> вести <span class="s">·</span> уступать</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO ROW (vertical, uncropped) -->
+<section>
+  <div class="wrap reveal center">
+    <div class="eyebrow" style="margin-bottom:30px">из сессий</div>
+    <div class="vstrip">
+      <div class="vframe"><video src="assets/IMG_3528.MP4" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="vframe"><video src="assets/IMG_3526.MP4" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="vframe"><video src="assets/IMG_4160%20copy.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section class="center">
+  <div class="wrap reveal">
+    <h2>Что остаётся <em>после</em></h2>
+    <div class="stk">
+      <div class="row"><div class="rt">Появляется опыт, в котором группа рискнула вместе и увидела, что может справиться</div></div>
+      <div class="row"><div class="rt">Возникает привычка внимательнее слышать друг друга, а не просто ждать своей очереди говорить</div></div>
+      <div class="row"><div class="rt">Становится понятнее, как из разных людей складывается общее действие</div></div>
+      <div class="row"><div class="rt">Проявляется, кто как ведёт себя в группе, — и это даёт материал для разговора после сессии</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTES CLOUD -->
+<div class="cloud reveal">
+  <div class="wrap">
+    <div class="eyebrow lbl">из отзывов участников</div>
+    <div class="qs">
+      <q class="m">Я бегал за музыкой, а не она за мной</q>
+      <q class="l">Перестаёшь чувствовать себя отдельно от других</q>
+      <q class="s">Это была динамическая медитация</q>
+      <q class="m">Музыка создаёт пространство, чтобы прожить что-то своё</q>
+      <q class="s">За день прожил целую жизнь</q>
+      <q class="l">Хотелось выстраивать отношения из какого-то центра</q>
+      <q class="s">Музыка ведёт, а ты бережно проживаешь важное</q>
+    </div>
+  </div>
+</div>
+
+<!-- CAROUSEL 2 -->
+<div class="strip reveal">
+  <div class="track rev">
+    <div class="card"><img src="assets/photo_2026-06-08%2012.54.13.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2012.54.41.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2012.54.15.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2013.26.20.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/dima-2.jpg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2012.54.13.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2012.54.41.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2012.54.15.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/photo_2026-06-08%2013.26.20.jpeg" alt="" loading="lazy"></div>
+    <div class="card"><img src="assets/dima-2.jpg" alt="" loading="lazy"></div>
+  </div>
+</div>
+
+<!-- TURNKEY -->
+<section class="center">
+  <div class="wrap reveal">
+    <h2>Можем сделать <em>всё целиком</em> или подключиться к части проекта</h2>
+    <div class="steps">
+      <span class="st">Знакомство</span><span class="sep">→</span>
+      <span class="st">Практики на внимание</span><span class="sep">→</span>
+      <span class="st">Импровизация</span><span class="sep">→</span>
+      <span class="st">Финал, где группа играет вместе</span>
+    </div>
+    <div class="tklines">
+      <p><b>Инструменты, звук, настройку и сопровождение</b> берём на себя — никто не остаётся один на один с незнакомым инструментом.</p>
+      <p>Проведём событие <b>полностью</b> или встроимся в уже существующую программу — зависит от задачи, формата и состава группы.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATS as photo cards -->
+<section>
+  <div class="wrap reveal">
+    <h2 class="center" style="margin-bottom:6px">Форматы</h2>
+    <div class="fcards">
+      <div class="fcard">
+        <img src="assets/000000780010%20(1).jpg" alt="" loading="lazy">
+        <div class="fc-b"><div class="fc-l">3–4 часа · одна сессия</div><div class="fc-h">Полдня</div><div class="fc-d">Подходит как самостоятельное событие или часть offsite-программы.</div></div>
+      </div>
+      <div class="fcard">
+        <img src="assets/000000800006%20(1).jpg" alt="" loading="lazy">
+        <div class="fc-b"><div class="fc-l">около 8 часов · несколько сессий</div><div class="fc-h">Полный день</div><div class="fc-d">Формат с паузами и более спокойным ритмом работы.</div></div>
+      </div>
+      <div class="fcard">
+        <img src="assets/000000790021%20(1).jpg" alt="" loading="lazy">
+        <div class="fc-b"><div class="fc-l">2–3 дня · выездной формат</div><div class="fc-h">Ретрит</div><div class="fc-d">Даёт больше времени на погружение, развитие процесса и неформальное общение.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE -->
+<section>
+  <div class="wrap reveal">
+    <div class="casegrid">
+      <img class="caseimg" src="assets/case-goris.jpg" alt="Горис, Армения" loading="lazy">
+      <div class="casebody">
+        <div class="ce">кейс</div>
+        <div class="rl">Горис, Армения · руководители местных компаний</div>
+        <p class="ct">Днём участники проходили групповые практики, а вечером собирались на музыкальные сессии. К концу второго дня расходиться уже не хотелось: группа вошла в общий ритм и захотела оставаться в нём дольше.</p>
+        <p class="punch">«На третий день на сессию заглянули трое наблюдателей миссии ООН из Венгрии. Они сказали, что это звучит как их народная музыка, и не поверили, что играют люди, которые впервые взяли инструменты в руки».</p>
+        <div class="src">рассказывает дима</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap reveal">
+    <h2 class="center" style="margin-bottom:8px">Частые вопросы</h2>
+    <div class="faq">
+      <details><summary>Нужно ли уметь играть на инструментах?<span class="ic"></span></summary><div class="ans">Нет. Всё устроено так, чтобы человек без опыта легко включился и получил удовольствие.</div></details>
+      <details><summary>Сколько это длится?<span class="ic"></span></summary><div class="ans">От одной сессии на 3–4 часа до выезда на два-три дня — зависит от формата.</div></details>
+      <details><summary>Сколько человек может участвовать?<span class="ic"></span></summary><div class="ans">Размер группы обсуждаем под задачу и формат.</div></details>
+      <details><summary>Что вы привозите, а что нужно от нас?<span class="ic"></span></summary><div class="ans">Инструменты и звук — наши, всё настраиваем сами. С вашей стороны — место и участники. Можем взять на себя и больше: зависит от проекта.</div></details>
+      <details><summary>А если кто-то стесняется?<span class="ic"></span></summary><div class="ans">Никто не солирует и не выступает. Можно участвовать ровно в том объёме, к которому человек готов.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing" id="cta">
+  <div class="wrap reveal">
+    <h2>Расскажите о <em>своей группе</em></h2>
+    <p class="body-p">У нас нет готового универсального пакета. Напишите, кто вы, какая у вас группа и зачем вам такая сессия, — мы предложим формат под ваш запрос.</p>
+    <a href="#" class="btn">Написать нам</a>
+    <div class="fine">в году немного дат · лучше писать заранее</div>
+  </div>
+</section>
+
+<footer><div class="wrap fin"><div>RARARA ARKESTRA · часть perfect days</div><div style="text-align:right">европа и не только · © 2026</div></div></footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>10),{passive:true});
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
