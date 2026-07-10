@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ru" data-accent="blue" data-duo="off" data-density="roomy" data-motion="on" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RARARA ARKESTRA — развитие топ-команд</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600;700&family=Fira+Mono:wght@400;500;700&family=Unbounded:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2ECDE; --paper2:#EAE1CF; --paper3:#E2D7C0;
+    --ink:#15110B; --muted:#766B57; --faint:#A99C82;
+    --line:rgba(21,17,11,.16); --line2:rgba(21,17,11,.34); --rule:#15110B;
+    --red:#E0401C; --blue:#5468FF; --green:#2F7A4A; --black:#15110B;
+    --accent:var(--red); --on-accent:#F7F1E4;
+    --disp:"Unbounded",system-ui,sans-serif;
+    --mono:"Fira Mono",ui-monospace,monospace;
+    --body:"Manrope",system-ui,sans-serif;
+    --sp:1; --maxw:1300px;
+  }
+  html[data-accent="blue"]{--accent:var(--blue)}
+  html[data-accent="black"]{--accent:var(--black)}
+  html[data-accent="green"]{--accent:var(--green)}
+  html[data-density="cozy"]{--sp:.72}
+
+  /* DARK THEME — warm near-black ground, off-white ink */
+  html[data-theme="dark"]{
+    --paper:#17130C; --paper2:#211B12; --paper3:#2B2416;
+    --ink:#F1EBDD; --muted:#ADA288; --faint:#776C54;
+    --line:rgba(241,235,221,.15); --line2:rgba(241,235,221,.34); --rule:#EBE4D4;
+    --on-accent:#F7F1E4;
+  }
+  /* keep the inverted bands dark instead of flipping to cream */
+  html[data-theme="dark"] .ticker{background:#0E0B05}
+  html[data-theme="dark"] .ticker span{color:var(--ink)}
+  html[data-theme="dark"] .cloud{background:#0E0B05}
+  html[data-theme="dark"] .cloud .mvt{border-top-color:var(--line2)}
+  html[data-theme="dark"] .cloud .mvt .nm,
+  html[data-theme="dark"] .cloud .mvt .nm b{color:var(--ink)}
+  html[data-theme="dark"] .cloud q{color:var(--ink)}
+  html[data-theme="dark"] .cloud q.l{color:var(--accent)}
+  /* grain reads as light on dark */
+  html[data-theme="dark"] body::after{mix-blend-mode:screen;opacity:.05}
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:400;
+    -webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden;position:relative}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:900;opacity:.06;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  a{color:inherit;text-decoration:none}
+  em{font-style:normal;color:var(--accent)}
+  img,video{display:block;max-width:100%}
+  ::selection{background:var(--accent);color:var(--on-accent)}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,72px)}
+  .mono{font-family:var(--mono);font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-size:11.5px}
+  .accent{color:var(--accent)}
+
+  /* duotone */
+  .frame,.vframe,.split .im,.band,.hostim{position:relative}
+  html[data-duo="on"] .frame img,
+  html[data-duo="on"] .band img,
+  html[data-duo="on"] .split .im img,
+  html[data-duo="on"] .vframe img,
+  html[data-duo="on"] .hostim img{filter:grayscale(1) contrast(1.08) brightness(1.04)}
+  html[data-duo="on"] .frame::after,
+  html[data-duo="on"] .band::after,
+  html[data-duo="on"] .split .im::after,
+  html[data-duo="on"] .vframe::after,
+  html[data-duo="on"] .hostim::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:var(--accent);mix-blend-mode:multiply;opacity:.9}
+
+  /* movement header — big poster numerals */
+  .mvt{display:flex;align-items:baseline;gap:16px;padding:16px 0 0;border-top:3px solid var(--rule);
+    font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;font-size:12px}
+  .mvt .no{font-family:var(--disp);font-weight:800;font-size:clamp(20px,2.4vw,30px);color:var(--accent);letter-spacing:0;line-height:1}
+  .mvt .nm{color:var(--ink);font-weight:600;align-self:center}
+  .mvt .nm b{font-weight:600}
+  .mvt .tail{margin-left:auto;color:var(--faint);font-size:11px;letter-spacing:.14em;align-self:center}
+
+  section{padding:calc(60px*var(--sp)) 0 calc(82px*var(--sp))}
+  h1,h2,h3{font-family:var(--disp);font-weight:600;letter-spacing:-.02em;line-height:1.02;text-wrap:balance}
+  .body-p{font-size:clamp(18.5px,1.7vw,22px);color:var(--muted);line-height:1.62;max-width:54ch}
+
+  /* NAV */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:200;background:color-mix(in srgb,var(--paper) 84%,transparent);
+    backdrop-filter:blur(10px);border-bottom:2px solid transparent;transition:border-color .3s}
+  .nav.scrolled{border-color:var(--rule)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px;max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,72px)}
+  .wm{font-family:var(--disp);font-weight:800;letter-spacing:-.01em;font-size:16px;display:flex;align-items:center;gap:9px}
+  .wm .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex:none}
+  .nav .right{display:flex;align-items:center;gap:22px}
+  .nav .navlink{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:none}
+  @media(min-width:900px){.nav .navlink{display:inline}.nav .navlink:hover{color:var(--accent)}}
+  .pill{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+    border:2px solid var(--rule);border-radius:0;padding:9px 18px;transition:.2s}
+  .pill:hover{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+
+  /* ticker — the very first line, right under the fixed nav */
+  .ticker{overflow:hidden;padding:14px 0;background:var(--ink);border-bottom:3px solid var(--rule)}
+  .ticker.top{margin-top:62px;border-top:0}
+  .ticker .tk{display:flex;width:max-content;animation:marq 44s linear infinite}
+  .ticker span{font-family:var(--disp);font-weight:600;text-transform:uppercase;font-size:clamp(14px,1.6vw,20px);padding:0 4px;white-space:nowrap;color:var(--paper)}
+  .ticker .dot{color:var(--accent);padding:0 24px}
+
+  /* HERO — asymmetric split: display type + tall live clip */
+  .hero{padding-top:clamp(36px,6vh,72px);padding-bottom:clamp(44px,6vw,84px)}
+  .hero .kicker{display:block;font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:clamp(16px,2vw,26px)}
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:clamp(30px,4.5vw,64px);align-items:end}
+  @media(min-width:920px){.hero-grid{grid-template-columns:1.12fr .88fr}}
+  .hero h1{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(34px,5.4vw,78px);
+    line-height:.98;letter-spacing:-.035em;max-width:14ch}
+  .hero .lead{font-size:clamp(18.5px,1.8vw,22px);color:var(--muted);max-width:46ch;line-height:1.55;margin-top:clamp(22px,2.8vw,36px)}
+  .hero .lead b{color:var(--ink);font-weight:600}
+  .hero .cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:clamp(24px,3vw,40px)}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:var(--on-accent);
+    border-radius:0;padding:15px 26px;transition:.2s;border:2px solid var(--accent)}
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--rule)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+  .btn.ghost:hover{background:var(--ink);color:var(--paper);box-shadow:5px 5px 0 var(--accent)}
+  .hero-m{position:relative}
+  .hero-m .vframe.hero-v{max-width:none;margin:0;width:100%;aspect-ratio:3/4;border:3px solid var(--rule);box-shadow:12px 12px 0 var(--accent)}
+  @media(min-width:920px){.hero-m .vframe.hero-v{max-height:72vh}}
+
+  .band{width:100vw;left:50%;margin-left:-50vw;overflow:hidden;background:var(--paper2)}
+  .band img,.band video{width:100%;height:100%;object-fit:cover}
+
+  /* film strip */
+  .strip{overflow:hidden;width:100vw;left:50%;margin-left:-50vw;position:relative;padding:0;border-top:3px solid var(--rule);border-bottom:3px solid var(--rule);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .track{display:flex;gap:0;width:max-content;animation:marq 56s linear infinite}
+  .strip:hover .track{animation-play-state:paused}
+  @keyframes marq{to{transform:translateX(-50%)}}
+  .frame{width:clamp(230px,26vw,360px);height:clamp(300px,30vw,420px);flex:none;overflow:hidden;background:var(--paper2);border-right:3px solid var(--rule)}
+  .frame img{width:100%;height:100%;object-fit:cover}
+  .frame .ix{position:absolute;left:9px;top:8px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--on-accent);background:var(--accent);padding:2px 6px}
+
+  /* DEEP PANELS — near-black editorial bands */
+  .deep{--dk-ink:var(--paper);--dk-mut:var(--paper2);background:var(--ink);padding:clamp(64px,9vh,124px) 0}
+  .deep .mvt{border-top-color:var(--paper)}
+  .deep .mvt .nm,.deep .mvt .nm b{color:var(--paper)}
+  html[data-theme="dark"] .deep{--dk-ink:var(--ink);--dk-mut:var(--muted);background:#0E0B05}
+  html[data-theme="dark"] .deep .mvt{border-top-color:var(--line2)}
+  html[data-theme="dark"] .deep .mvt .nm,
+  html[data-theme="dark"] .deep .mvt .nm b{color:var(--ink)}
+
+  /* WHAT IS — big definition + photo */
+  .what-grid{display:grid;grid-template-columns:1fr;gap:clamp(32px,4.5vw,68px);margin-top:clamp(30px,4vw,54px);align-items:start}
+  @media(min-width:920px){.what-grid{grid-template-columns:1.05fr .95fr}}
+  .def{font-family:var(--disp);font-weight:600;text-transform:uppercase;font-size:clamp(25px,3.4vw,50px);line-height:1.05;letter-spacing:-.02em;color:var(--dk-ink);max-width:20ch}
+  .what-p{font-size:clamp(18px,1.7vw,21px);color:var(--dk-mut);line-height:1.62;max-width:52ch;margin-top:clamp(18px,2vw,26px)}
+  .what-p b{color:var(--dk-ink);font-weight:600}
+  .what-m .im{position:relative;border:3px solid var(--line2);overflow:hidden}
+  .what-m img{width:100%;height:clamp(420px,56vw,680px);object-fit:cover}
+  .what-m .tag{position:absolute;left:12px;bottom:11px;z-index:2;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:5px 10px}
+
+  /* topics — 4 compact one-line themes on the deep panel */
+  .topics{display:grid;grid-template-columns:1fr;margin-top:clamp(36px,4.5vw,64px)}
+  @media(min-width:680px){.topics{grid-template-columns:repeat(2,1fr);column-gap:28px}}
+  @media(min-width:1080px){.topics{grid-template-columns:repeat(4,1fr)}}
+  .topic{padding:18px 0 10px;border-top:2px solid var(--line2)}
+  .topic .tn{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}
+  .topic .tt{font-family:var(--disp);font-weight:600;text-transform:uppercase;font-size:clamp(16px,1.5vw,20px);line-height:1.14;color:var(--dk-ink);margin-top:10px}
+  .topic .td{font-size:16.5px;color:var(--dk-mut);line-height:1.5;margin-top:8px}
+
+  /* LIVE — giant word overlapping the film band */
+  .live{padding-bottom:clamp(44px,6vw,90px)}
+  .vidframe{border:3px solid var(--rule);margin-top:clamp(10px,1.6vw,20px)}
+  .live .hp{font-size:clamp(18px,1.7vw,21px);color:var(--muted);line-height:1.58;max-width:44ch;margin-top:clamp(18px,2.2vw,28px)}
+  .live-h{position:relative;z-index:5;pointer-events:none}
+  .live-h h2{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:clamp(52px,12.5vw,180px);line-height:.9;letter-spacing:-.03em;margin-top:clamp(14px,2vw,26px);margin-bottom:-.4em}
+  .vid{position:relative;width:100%;padding-top:56.25%;overflow:hidden;background:#000}
+  .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .vid .vplay{position:absolute;inset:0;width:100%;height:100%;border:0;cursor:pointer;padding:0;background:#000;display:block}
+  .vid .vplay img{width:100%;height:100%;object-fit:cover;opacity:.82;transition:.3s}
+  html[data-duo="on"] .vid .vplay img{filter:grayscale(1) contrast(1.08) brightness(1.04)}
+  html[data-duo="on"] .vid .vplay::after{content:"";position:absolute;inset:0;background:var(--accent);mix-blend-mode:multiply;opacity:.9;pointer-events:none}
+  .vid .vplay:hover img{opacity:.96}
+  .vid .pbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(74px,8vw,96px);height:clamp(74px,8vw,96px);border-radius:0;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;justify-content:center;font-size:24px;padding-left:5px;transition:.2s;z-index:3}
+  .vid .vplay:hover .pbtn{transform:translate(-50%,-50%) scale(1.08)}
+  .vid .vlabel{position:absolute;left:16px;bottom:15px;z-index:3;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:6px 11px}
+  .vidband{border-top:3px solid var(--rule);border-bottom:3px solid var(--rule)}
+
+  .head{display:grid;grid-template-columns:1fr;gap:14px;align-items:end;margin-top:clamp(24px,3vw,38px)}
+  @media(min-width:780px){.head{grid-template-columns:1.5fr 1fr;gap:40px}}
+  .head h2{font-size:clamp(30px,5vw,68px);text-transform:uppercase}
+  .head .hp{font-size:clamp(18px,1.7vw,21px);color:var(--muted);line-height:1.58;max-width:44ch}
+
+  /* text + vertical video split */
+  .mediagrid{display:grid;grid-template-columns:1fr;gap:clamp(30px,4.5vw,64px);align-items:start;margin-top:clamp(24px,3vw,40px)}
+  @media(min-width:900px){.mediagrid{grid-template-columns:1.25fr .75fr}}
+  .mediagrid .mcol{display:flex;flex-direction:column;gap:18px}
+  @media(min-width:900px){.mediagrid .mcol{position:sticky;top:88px}}
+
+  /* how it works rows */
+  .howrows{border-top:2px solid var(--rule)}
+  .howrows .hrow{padding:clamp(24px,2.8vw,36px) 0;border-bottom:2px solid var(--rule)}
+  .howrows .hno{font-family:var(--disp);font-weight:800;font-size:clamp(24px,2.4vw,34px);color:var(--accent);line-height:1;margin-bottom:12px}
+  .howrows .ht{font-family:var(--disp);font-weight:600;text-transform:uppercase;font-size:clamp(18px,1.9vw,24px);line-height:1.08}
+  .howrows .hd{font-size:19px;color:var(--muted);line-height:1.6;margin-top:12px;max-width:56ch}
+  .howrows .hd b{color:var(--ink);font-weight:600}
+
+  /* one-line formats strip */
+  .formatline{margin-top:clamp(26px,3.2vw,44px);border-top:3px solid var(--rule);padding-top:20px;
+    font-family:var(--mono);font-size:clamp(12px,1.3vw,14px);font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);line-height:2.1}
+  .formatline b{color:var(--ink);font-weight:700}
+  .formatline .sep{color:var(--accent);padding:0 10px}
+
+  /* HOST */
+  .host .hostname{font-size:clamp(44px,8.4vw,120px);text-transform:uppercase;line-height:.92;margin-top:clamp(26px,3.4vw,44px);position:relative;z-index:2;margin-bottom:-.3em;pointer-events:none}
+  .hostgrid{display:grid;grid-template-columns:1fr;gap:clamp(28px,4vw,56px);align-items:start}
+  @media(min-width:880px){.hostgrid{grid-template-columns:.9fr 1.1fr}}
+  .hostim{overflow:hidden;border:3px solid var(--rule)}
+  .hostim img{width:100%;height:clamp(460px,56vw,720px);object-fit:cover}
+  .hostim .tag{position:absolute;left:12px;bottom:11px;z-index:2;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:5px 10px}
+  .hostbio{padding-top:clamp(30px,6vw,110px)}
+  .hostbio .intro{font-family:var(--disp);font-weight:600;font-size:clamp(21px,2.5vw,32px);line-height:1.2;color:var(--ink);max-width:24ch}
+  .hostbio .intro em{color:var(--accent)}
+  .scenes{margin-top:clamp(28px,3.4vw,42px);border-top:2px solid var(--rule);padding-top:20px;font-size:16.5px;color:var(--muted);line-height:1.9}
+  .scenes .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-right:14px}
+  .scenes .sep{color:var(--accent);padding:0 6px}
+  .hostbio .hostp{font-size:clamp(17px,1.6vw,19px);color:var(--muted);line-height:1.64;margin-top:clamp(16px,2vw,22px);max-width:48ch}
+  .hostbio .hostp b{color:var(--ink);font-weight:600}
+  .hostq{border:3px solid var(--rule);padding:clamp(22px,2.6vw,32px);margin-top:clamp(24px,3vw,34px)}
+  .hostq .k{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .hostq q{font-family:var(--disp);font-weight:600;font-size:clamp(18px,2vw,25px);line-height:1.24;color:var(--ink);quotes:"«" "»"}
+
+  /* vertical session clips — solo frames next to text */
+  .vframe{overflow:hidden;background:var(--paper2);aspect-ratio:9/16}
+  .vframe video{width:100%;height:100%;object-fit:cover}
+  .vframe .vtag{position:absolute;left:10px;bottom:10px;z-index:2;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);padding:4px 9px}
+  .vframe .vsnd{position:absolute;right:10px;top:10px;z-index:3;cursor:pointer;line-height:1;
+    font-family:var(--mono);font-size:13.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink);background:color-mix(in srgb,var(--paper) 82%,transparent);
+    border:2px solid var(--rule);padding:10px 16px;transition:.15s}
+  .vframe .vsnd::before{content:"♪ "}
+  .vframe .vsnd:hover,.vframe .vsnd.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+  .vframe.solo{width:100%;max-width:420px;border:3px solid var(--rule);margin:0 auto}
+  @media(min-width:900px){.vframe.solo{margin:0}}
+
+  /* quotes — even grid on the near-black cloud */
+  .cloud{background:var(--ink);padding:clamp(60px,9vh,120px) 0}
+  .cloud .mvt{border-top-color:var(--paper)}
+  .cloud .mvt .nm,.cloud .mvt .nm b{color:var(--paper)}
+  .cloud .qs{display:grid;grid-template-columns:1fr;gap:16px;margin-top:clamp(32px,4vw,50px)}
+  @media(min-width:640px){.cloud .qs{grid-template-columns:repeat(3,1fr)}}
+  .cloud q{display:flex;align-items:flex-end;min-height:clamp(170px,19vw,250px);padding:clamp(20px,2.4vw,30px);
+    border:2px solid var(--line2);font-family:var(--disp);font-weight:600;font-size:clamp(17px,1.8vw,23px);
+    line-height:1.26;color:var(--paper);transition:.18s}
+  .cloud q:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--accent);border-color:var(--accent)}
+  .cloud q.l{color:var(--accent);border-color:var(--accent)}
+  .cloud q::before,.cloud q::after{content:none}
+  .proofline{margin-top:clamp(28px,3.4vw,44px);display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px}
+  .proofline .k{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);flex:none}
+  .proofline .t{font-size:clamp(16px,1.5vw,19px);color:var(--paper2);line-height:1.55;max-width:64ch}
+  html[data-theme="dark"] .proofline .t{color:var(--muted)}
+
+  /* closing */
+  .closing{text-align:left;padding-bottom:clamp(68px,9vh,116px)}
+  .closing h2{font-size:clamp(34px,7vw,92px);line-height:.94;max-width:15ch;margin:0;text-transform:uppercase}
+  .closing .body-p{max-width:52ch;margin:clamp(22px,3vw,32px) 0 0;text-align:left}
+  .closing .body-p b{color:var(--ink);font-weight:600}
+  .closing .cta-row{justify-content:flex-start;margin-top:clamp(28px,3.4vw,40px);display:flex;flex-wrap:wrap;gap:14px}
+  .closing .fine{margin-top:clamp(26px,3vw,36px);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+  footer{border-top:3px solid var(--rule);padding:clamp(34px,4vw,52px) 0 clamp(44px,5vw,64px)}
+  .fin{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);line-height:2}
+  .fin .accent{font-weight:700}
+  .fin b{color:var(--ink);font-weight:600}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  html[data-motion="off"] .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  html[data-motion="off"] .track,html[data-motion="off"] .tk{animation:none!important}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}.track,.tk{animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a href="#top" class="wm"><span class="dot"></span>RARARA ARKESTRA</a>
+    <div class="right">
+      <a href="#what" class="navlink">что это</a>
+      <a href="#how" class="navlink">как проходит</a>
+      <a href="#host" class="navlink">кто ведёт</a>
+      <a href="#cta" class="pill">написать</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ticker — the very top line, right under the fixed nav -->
+<div class="ticker top" id="top">
+  <div class="tk">
+    <span>развитие топ-команд через музыкальную импровизацию</span><span class="dot">✶</span>
+    <span>ведёт Дима Устинов</span><span class="dot">✶</span>
+    <span>лидерство</span><span class="dot">✶</span>
+    <span>сотрудничество</span><span class="dot">✶</span>
+    <span>рефрейминг</span><span class="dot">✶</span>
+    <span>камерно 15–30 человек</span><span class="dot">✶</span>
+    <span>собираем под ваш запрос</span><span class="dot">✶</span>
+    <span>развитие топ-команд через музыкальную импровизацию</span><span class="dot">✶</span>
+    <span>ведёт Дима Устинов</span><span class="dot">✶</span>
+    <span>лидерство</span><span class="dot">✶</span>
+    <span>сотрудничество</span><span class="dot">✶</span>
+    <span>рефрейминг</span><span class="dot">✶</span>
+    <span>камерно 15–30 человек</span><span class="dot">✶</span>
+    <span>собираем под ваш запрос</span><span class="dot">✶</span>
+  </div>
+</div>
+
+<!-- ============ HERO — asymmetric split: type + live clip ============ -->
+<header class="hero" data-screen-label="Hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="kicker">музыкальные сессии для команд · ведёт дима устинов</span>
+        <h1>Команда, которую <em>слышно</em></h1>
+        <p class="lead"><b>Музыкальные импровизационные сессии для команд.</b> Развивают лидерство, сотрудничество и умение действовать в неопределённости. Через музыку, а не слайды.</p>
+        <div class="cta-row">
+          <a href="#cta" class="btn">Рассказать про задачу</a>
+        </div>
+      </div>
+      <div class="hero-m">
+        <div class="vframe solo hero-v"><video class="vclip" src="assets/IMG_3528.MP4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">сессия · live</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 01 · ЧТО ЭТО / ЗАЧЕМ — deep editorial panel ============ -->
+<section class="deep" id="what" data-screen-label="Что это">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">01</span><span class="nm"><b>Что это и зачем</b></span></div>
+    <div class="what-grid">
+      <div>
+        <p class="def">Команда без музыкального опыта за несколько часов начинает играть вместе</p>
+        <p class="what-p">В звуке сразу слышно то, что прячет совещание: <b>кто ведёт, кто слушает, кто тянет группу.</b> Дальше это становится разговором о том, как команда работает на самом деле.</p>
+      </div>
+      <div class="what-m">
+        <div class="im"><img src="assets/000000780008 (1).jpg" alt="Команда играет вместе на сессии" loading="lazy"><span class="tag">из сессии</span></div>
+      </div>
+    </div>
+    <div class="topics">
+      <div class="topic"><div class="tn">01</div><div class="tt">Лидерство</div><div class="td">Видно, кто и как ведёт группу.</div></div>
+      <div class="topic"><div class="tn">02</div><div class="tt">Сотрудничество</div><div class="td">Что держит общую работу, а что ломает.</div></div>
+      <div class="topic"><div class="tn">03</div><div class="tt">Действие в неопределённости</div><div class="td">Играть, когда готового плана нет.</div></div>
+      <div class="topic"><div class="tn">04</div><div class="tt">Рефрейминг</div><div class="td">Своя задача через другую линзу.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 · ВЖИВУЮ — giant word over the video band ============ -->
+<section class="live" id="live" data-screen-label="Вживую">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">02</span><span class="nm"><b>Вживую</b></span></div>
+    <p class="hp">Несколько минут одной сессии скажут больше, чем любой текст на этой странице.</p>
+    <div class="live-h"><h2>Вжи<em>вую</em></h2></div>
+    <div class="vid vidframe reveal"><button class="vplay" type="button" data-yt="_kpWQrY3aGg"><img src="assets/000000800006 (1).jpg" alt="RARARA — сессия" loading="lazy"><span class="vlabel">RARARA · сессия</span><span class="pbtn">▶</span></button></div>
+  </div>
+</section>
+
+<!-- ============ 03 · КАК ПРОХОДИТ — механика + форматы в одном блоке ============ -->
+<section id="how" data-screen-label="Как проходит">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">03</span><span class="nm"><b>Как проходит</b></span></div>
+    <div class="head">
+      <h2>Как это <em>проходит</em></h2>
+      <p class="hp">Работает даже с командой, где никто никогда не играл музыку.</p>
+    </div>
+    <div class="mediagrid">
+      <div class="tcol">
+        <div class="howrows">
+          <div class="hrow"><div class="hno">01</div><div class="ht">Незнакомые инструменты уравнивают всех</div><div class="hd">CEO и джун начинают с одной точки, без готовых преимуществ.</div></div>
+          <div class="hrow"><div class="hno">02</div><div class="ht">Никто не выступает</div><div class="hd">Ни сцены, ни зрителей: каждый включается в том объёме, к которому готов.</div></div>
+          <div class="hrow"><div class="hno">03</div><div class="ht">Собрано под вашу задачу</div><div class="hd">Из вашего запроса собираем программу: практики, акценты, разговор после звука.</div></div>
+        </div>
+        <div class="formatline"><b>Сессия 3–4 часа, полный день или выездной ретрит</b><span class="sep">·</span>15–30 человек<span class="sep">·</span>инструменты, звук и сопровождение на нас</div>
+      </div>
+      <div class="mcol">
+        <div class="vframe solo"><video class="vclip" src="assets/IMG_3526.MP4" muted loop playsinline preload="metadata"></video><button class="vsnd" type="button" aria-label="Включить звук">звук</button><span class="vtag">из сессии</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- film strip — one breath between mechanics and the host -->
+<div class="strip">
+  <div class="track">
+    <div class="frame"><img src="assets/photo_2026-06-08 12.54.13.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/photo_2026-07-10 10.51.20.jpeg" alt="рукописные карточки-партитуры" loading="lazy"></div>
+    <div class="frame"><img src="assets/000000790035 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/000000780008 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/photo_2026-07-10 10.51.23.jpeg" alt="инструменты и партитуры перед сессией" loading="lazy"></div>
+    <div class="frame"><img src="assets/photo_2026-06-08 12.54.41.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/000000800006 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/000000780010 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/photo_2026-06-08 12.54.13.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/photo_2026-07-10 10.51.20.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/000000790035 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/000000780008 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/photo_2026-07-10 10.51.23.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/photo_2026-06-08 12.54.41.jpeg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/000000800006 (1).jpg" alt="" loading="lazy"></div>
+    <div class="frame"><img src="assets/000000780010 (1).jpg" alt="" loading="lazy"></div>
+  </div>
+</div>
+
+<!-- ============ 04 · КТО ВЕДЁТ — name overlapping the portrait ============ -->
+<section class="host" id="host" data-screen-label="Кто ведёт">
+  <div class="wrap reveal">
+    <div class="mvt"><span class="no">04</span><span class="nm"><b>Кто ведёт</b></span></div>
+    <h2 class="hostname">Дима <em>Устинов</em></h2>
+    <div class="hostgrid">
+      <div class="hostim"><img src="assets/000043.JPG" alt="Дима Устинов" loading="lazy"><span class="tag">Дима Устинов</span></div>
+      <div class="hostbio">
+        <p class="intro">Музыкант, композитор и саунд-артист. Годами собирает ансамбли из людей, никогда не игравших музыку.</p>
+        <p class="hostp">Создал augmented piano — акустический рояль, соединённый с электроникой и светом. Работает с тем, как через звук и совместное действие между людьми возникает связь и меняется состояние группы.</p>
+        <blockquote class="hostq"><span class="k">его взгляд</span><q>Мне интересно, как музыка может лечить — и человека, и то, что происходит между людьми</q></blockquote>
+        <div class="scenes"><span class="k">сцены</span>augmented piano<span class="sep">·</span>Венецианская биеннале<span class="sep">·</span>Sonar<span class="sep">·</span>Red Bull Music Academy</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 · ГОЛОСА — even grid of participant quotes ============ -->
+<div class="cloud reveal" id="voices" data-screen-label="Голоса">
+  <div class="wrap">
+    <div class="mvt" style="border-top:none;padding-top:0"><span class="no">05</span><span class="nm"><b>Голоса участников</b></span></div>
+    <div class="qs">
+      <q class="l">«Я приехал с одним запросом, а&nbsp;получил ответ на совершенно другие вопросы»</q>
+      <q>«Одновременно и сильно сложнее, и&nbsp;сильно проще, чем кажется»</q>
+      <q>«Мы всегда играли музыку вместе. Просто в какой-то момент это стало доступно только профессионалам. Теперь&nbsp;— нет»</q>
+      <q class="l">«Научиться играть на гитаре — это одно. Уметь вписаться в коллектив — отдельный навык»</q>
+      <q>«Без рамок обычно не классно. Дима создаёт именно это пространство»</q>
+      <q>«Два дня как за пять минут»</q>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 06 · КОНТАКТ ============ -->
+<section class="closing" id="cta" data-screen-label="Контакт">
+  <div class="wrap reveal">
+    <div class="mvt" style="margin-bottom:clamp(20px,2.6vw,34px)"><span class="no">06</span><span class="nm"><b>Контакт</b></span></div>
+    <h2>Расскажите <em>вашу задачу</em></h2>
+    <p class="body-p">Напишите пару слов о команде и задаче. Придумаем формат под вас. <b>И да: это ещё и просто очень хороший общий день.</b></p>
+    <div class="cta-row">
+      <a href="mailto:hello@rarara.example" class="btn">Написать нам</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fin">
+    <div><span class="accent">✶</span> RARARA ARKESTRA · часть <b>perfect days</b></div>
+    <div style="text-align:right">европа и не&nbsp;только · © 2026</div>
+  </div>
+</footer>
+
+<script>
+  // nav border on scroll
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>10),{passive:true});
+  // reveal
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // session clips — each clip gets its own observer: plays (muted) in viewport, pauses out of it
+  const clips=[...document.querySelectorAll('.vclip')];
+  clips.forEach(v=>{
+    const vio=new IntersectionObserver((es)=>{es.forEach(e=>{
+      if(e.isIntersecting){v.play().catch(()=>{})}else{v.pause()}
+    })},{threshold:.15});
+    vio.observe(v);
+  });
+  // sound button — only one audible video at a time
+  document.querySelectorAll('.vsnd').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const v=btn.closest('.vframe').querySelector('video');
+      const turnOn=v.muted;
+      clips.forEach(o=>{o.muted=true});
+      document.querySelectorAll('.vsnd').forEach(b=>b.classList.remove('on'));
+      if(turnOn){v.muted=false;v.play().catch(()=>{});btn.classList.add('on')}
+    });
+  });
+  // youtube facade — load player only on click
+  document.querySelectorAll('.vid .vplay').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const id=btn.dataset.yt;
+      const f=document.createElement('iframe');
+      f.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+      f.title='RARARA — сессия';
+      f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      f.allowFullscreen=true;
+      f.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:0';
+      btn.replaceWith(f);
+    });
+  });
+</script>
+</body>
+</html>
